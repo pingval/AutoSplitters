@@ -1,8 +1,8 @@
-﻿state("th09", "ver 1.50a")
+state("th09", "ver 1.50a")
 {
   int wins_1p : 0x0a7e98;
   int wins_2p : 0x0a7e9c;
-  byte difficulty : 0x0a7ec4;
+  int st : 0x0a7ec4;
 }
 
 init
@@ -17,7 +17,7 @@ update
 
 start
 {
-  return old.difficulty == 0 && current.difficulty != 0;
+  return old.st == 0 && current.st != 0;
 }
 
 split
@@ -25,8 +25,8 @@ split
   return old.wins_1p == 0 && current.wins_1p > 0;
 }
 
+// This code malfunctions occasionally.
 reset
 {
-  return (current.wins_1p == 0
-          && old.difficulty != 0 && current.difficulty == 0);
+//  return old.st != 0 && current.st == 0;
 }
