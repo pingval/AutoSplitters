@@ -1,4 +1,6 @@
-﻿state("th095", "ver 1.02a")
+// Please move both of your "scoreth095.dat" and "bestshot" directory to other directory before running.
+
+state("th095", "ver 1.02a")
 {
   int unknown : 0x0c4df4;
 }
@@ -47,8 +49,7 @@ start
 {
   // when 1-1 is not cleared and start playing
   var flg_1_1 = memory.ReadValue<int>((IntPtr)vars.getClearFlagAddr(game,  1, 1));
-  if (flg_1_1 == 0 && old.unknown == 0 && current.unknown != 0)
-    return true;
+  return flg_1_1 == 0 && old.unknown == 0 && current.unknown != 0;
 }
 
 split
