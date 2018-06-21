@@ -5,6 +5,12 @@ state("th095", "ver 1.02a")
   int unknown : 0x0c4df4;
 }
 
+// English Patched - https://en.touhouwiki.net/wiki/Shoot_the_Bullet/English_patch
+state("th095e", "ver 1.02a with English Patch v1.1")
+{
+  int unknown : 0x0c4df4;
+}
+
 startup
 {
   var info_base_addr = 0x4c4e78;
