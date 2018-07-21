@@ -13,6 +13,9 @@ state("th095e", "ver 1.02a with English Patch v1.1")
 
 startup
 {
+  vars.split_delay = 5;
+  vars.split_counter = 0;
+
   var info_base_addr = 0x4c4e78;
 
   vars.getClearFlagAddr = (Func<Process, int, int, IntPtr>)((proc, level, scene) => {
@@ -60,9 +63,19 @@ start
 
 split
 {
-  foreach (var w in vars.watchers) {
-    if (w.Changed)
-      return true;
+  if (vars.split_counter >= vars.split_delay) {
+    vars.split_counter = 0;
+    return true;
+  } else if (vars.split_counter > 0) {
+    ++vars.split_counter;
+    return false;
+  } else {
+    foreach (var w in vars.watchers) {
+      if (w.Changed) {
+        vars.split_counter = 1;
+        return false;
+      }
+    }
   }
 }
 
