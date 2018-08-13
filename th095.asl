@@ -3,21 +3,29 @@
 state("th095", "ver 1.02a")
 {
   int unknown : 0x0c4df4;
+  int st_base : 0x0bdec8;
 }
 
 // English Patched - https://en.touhouwiki.net/wiki/Shoot_the_Bullet/English_patch
 state("th095e", "ver 1.02a with English Patch v1.1")
 {
   int unknown : 0x0c4df4;
+  int st_base : 0x0bdec8;
 }
 
 startup
 {
-  var info_base_addr = 0x4c4e78;
+  settings.Add("iterate", false, "Iterate Only One Scene");
+  settings.SetToolTip("iterate", "e.g. kinkaku-ji 108 run");
 
   vars.split_delay = 5;
   vars.split_counter = 0;
+
+  var info_base_addr = 0x4c4e78;
   vars.info_base_value = 0;
+
+  // iterate
+  vars.st_offset = 0xfc;
 
   vars.getInfoBaseValue = (Func<Process, int>)((proc) => {
     return proc.ReadValue<int>((IntPtr)info_base_addr);
@@ -54,29 +62,40 @@ init
 {
   refreshRate = 60;
 
+  vars.st = new MemoryWatcher<int>((IntPtr)(current.st_base + vars.st_offset));
   vars.info_base_value = vars.getInfoBaseValue(game);
   vars.watchers = vars.createMemoryWatcherList(game);
 }
 
 update
 {
-  var current_info_base_value = vars.getInfoBaseValue(game);
-  if (vars.info_base_value != current_info_base_value) {
-//    print("old base: "+vars.info_base_value.ToString("X"));
-//    print("new base: "+current_info_base_value.ToString("X"));
-    vars.info_base_value = current_info_base_value;
+  if (settings["iterate"]) {
+    if (old.st_base != current.st_base) {
+      vars.st = new MemoryWatcher<int>((IntPtr)(current.st_base + vars.st_offset));
+    }
+    vars.st.Update(game);
+  } else {
+    var current_info_base_value = vars.getInfoBaseValue(game);
+    if (vars.info_base_value != current_info_base_value) {
+      //    print("old base: "+vars.info_base_value.ToString("X"));
+      //    print("new base: "+current_info_base_value.ToString("X"));
+      vars.info_base_value = current_info_base_value;
 
-    vars.watchers = vars.createMemoryWatcherList(game);
+      vars.watchers = vars.createMemoryWatcherList(game);
+    }
+    vars.watchers.UpdateAll(game);
   }
-
-  vars.watchers.UpdateAll(game);
 }
 
 start
 {
-  // when 1-1 is not cleared and start playing
-  var flg_1_1 = memory.ReadValue<int>((IntPtr)vars.getClearFlagAddr(game,  1, 1));
-  return flg_1_1 == 0 && old.unknown == 0 && current.unknown != 0;
+  if (settings["iterate"]) {
+    return old.unknown == 0 && current.unknown != 0;
+  } else {
+    // when 1-1 is not cleared and start playing
+    var flg_1_1 = memory.ReadValue<int>((IntPtr)vars.getClearFlagAddr(game,  1, 1));
+    return flg_1_1 == 0 && old.unknown == 0 && current.unknown != 0;
+  }
 }
 
 split
@@ -88,10 +107,16 @@ split
     ++vars.split_counter;
     return false;
   } else {
-    foreach (var w in vars.watchers) {
-      if (w.Changed) {
+    if (settings["iterate"]) {
+      if ((vars.st.Old & 0x40) == 0 && (vars.st.Current & 0x40) != 0) {
         vars.split_counter = 1;
-        return false;
+      }
+    } else {
+      foreach (var w in vars.watchers) {
+        if (w.Changed) {
+          vars.split_counter = 1;
+          return false;
+        }
       }
     }
   }
