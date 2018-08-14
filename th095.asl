@@ -15,8 +15,8 @@ state("th095e", "ver 1.02a with English Patch v1.1")
 
 startup
 {
-  settings.Add("iterate", false, "Iterate Only One Scene");
-  settings.SetToolTip("iterate", "e.g. kinkaku-ji 108 run");
+  settings.Add("each time", false, "Split each time a scene is cleared");
+  settings.SetToolTip("each time", "e.g. kinkaku-ji 108 run");
 
   vars.split_delay = 5;
   vars.split_counter = 0;
@@ -24,7 +24,7 @@ startup
   var info_base_addr = 0x4c4e78;
   vars.info_base_value = 0;
 
-  // iterate
+  // each time
   vars.st_offset = 0xfc;
 
   vars.getInfoBaseValue = (Func<Process, int>)((proc) => {
@@ -69,7 +69,7 @@ init
 
 update
 {
-  if (settings["iterate"]) {
+  if (settings["each time"]) {
     if (old.st_base != current.st_base) {
       vars.st = new MemoryWatcher<int>((IntPtr)(current.st_base + vars.st_offset));
     }
@@ -89,7 +89,7 @@ update
 
 start
 {
-  if (settings["iterate"]) {
+  if (settings["each time"]) {
     return old.unknown == 0 && current.unknown != 0;
   } else {
     // when 1-1 is not cleared and start playing
@@ -107,7 +107,7 @@ split
     ++vars.split_counter;
     return false;
   } else {
-    if (settings["iterate"]) {
+    if (settings["each time"]) {
       if ((vars.st.Old & 0x40) == 0 && (vars.st.Current & 0x40) != 0) {
         vars.split_counter = 1;
       }
