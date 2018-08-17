@@ -100,23 +100,19 @@ start
 
 split
 {
-  if (vars.split_counter >= vars.split_delay) {
-    vars.split_counter = 0;
-    return true;
-  } else if (vars.split_counter > 0) {
-    ++vars.split_counter;
-    return false;
+  if (vars.split_counter > 0) {
+    return --vars.split_counter == 0;
+  }
+
+  if (settings["each time"]) {
+    if ((vars.st.Old & 0x40) == 0 && (vars.st.Current & 0x40) != 0) {
+      vars.split_counter = vars.split_delay;
+    }
   } else {
-    if (settings["each time"]) {
-      if ((vars.st.Old & 0x40) == 0 && (vars.st.Current & 0x40) != 0) {
-        vars.split_counter = 1;
-      }
-    } else {
-      foreach (var w in vars.watchers) {
-        if (w.Changed) {
-          vars.split_counter = 1;
-          return false;
-        }
+    foreach (var w in vars.watchers) {
+      if (w.Changed) {
+        vars.split_counter = vars.split_delay;
+        return false;
       }
     }
   }
