@@ -1,4 +1,4 @@
-﻿// Please move your "scoreth095.dat", "scoreth165_bk.dat" and "savedata" directory to other directory before running.
+// Please move your "scoreth095.dat", "scoreth165_bk.dat" and "savedata" directory to other directory before running.
 
 state("th165", "ver 1.00a")
 {
@@ -209,12 +209,12 @@ startup
     Tuple.Create(102, "[Individual][Nightmare Diary] Diary-4", "Diary-4", "not recommended due to Diary-4 Shot Split", false, true),
   };
 
-  settings.Add("Automatically Start", true, "Start on \"Game Start\" with new game");
-  settings.SetToolTip("Automatically Start", "Start timing on SRC rules");
+  settings.Add("Auto Start", true, "Auto start on \"Game Start\" with new game");
+  settings.SetToolTip("Auto Start", "Start timing on SRC rules");
 
-  settings.Add("Automatically Reset", true, "Reset when game is restarted with new game");
+  settings.Add("Auto Reset", true, "Auto reset when game is restarted with new game");
 
-  settings.Add("Show Counts", true, "Show Clear/Death/DeathCancel Counts");
+  settings.Add("Show Counts", true, "Show Clear/Death/DeathCancel Count");
   settings.SetToolTip("Show Counts", "Override first text component with some counts");
 
   vars.splits = new Dictionary<string, int>();
@@ -239,7 +239,6 @@ startup
     } else if (key.StartsWith("<Parent>")) {
       settings.CurrentDefaultParent = null;
     }
-    
 
     settings.Add(key, enabled, label);
     if (tooltip != "")
@@ -255,7 +254,7 @@ startup
   vars.getMemoryWatcherList = (Func<Process, MemoryWatcherList>)((proc) => {
     return new MemoryWatcherList {
 //       new MemoryWatcher<int>((IntPtr)0x4b3a98) { Name = "Survive?" },
-//       new MemoryWatcher<int>((IntPtr)0x4b3b04) { Name = "Start Time" },
+//       new MemoryWatcher<int>((IntPtr)0x4b3b04) { Name = "Base Time" },
       new MemoryWatcher<int>((IntPtr)0x4b3ce0) { Name = "Start?" },
       new MemoryWatcher<int>((IntPtr)0x4b5670) { Name = "in Game?" },
       new MemoryWatcher<int>(vars.dreams_offset + 0x20) { Name = "Sun-1 Try Count" },
@@ -366,11 +365,11 @@ update
 
 start
 {
-  var res = (settings["Automatically Start"]
+  var res = (settings["Auto Start"]
              && vars.w["Start?"].Old == 0
              && vars.w["Start?"].Current != 0);
   if (res)
-    print("[ASL] Automatically Start");
+    print("[ASL] Auto Start");
   return res;
 }
 
@@ -405,13 +404,17 @@ split
 
 reset
 {
-  var res = (settings["Automatically Reset"]
+  var res = (settings["Auto Reset"]
              && vars.w["Sun-1 Try Count"].Current == 0
              && vars.w["Start?"].Current == 0
              && !vars.in_game());
   if (res)
-    print("[ASL] Automatically Reset");
+    print("[ASL] Auto Reset");
   return res;
+}
+
+isLoading {
+  return true;
 }
 
 gameTime {
