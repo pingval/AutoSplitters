@@ -25,19 +25,19 @@ startup
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
-    Tuple.Create(0, "Diary-4 Shot", "Split on final shot on Diary-4", "End timing on SRC rules", true, true),
-    Tuple.Create(-1, "<Parent> [Unlock]", "Unlock Splits", "", true, true),
+    Tuple.Create(0, "Diary-4 Shot", "Split on the final photo on Diary-4", "End timing on SRC rules", true, true),
+    Tuple.Create(-1, "<Parent> [Unlock]", "Unlock Splits", "What elements have you unlocked?", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][ESP]", "ESP", "", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][First Week]", "First Week", "", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][Wrong Week]", "Wrong Week", "a.k.a 2nd Week", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][Nightmare Week]", "Nightmare Week", "a.k.a 3rd Week", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][Nightmare Diary]", "Nightmare Diary", "", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][End Screen]", "End Screen", "", true, true),
-    Tuple.Create(2, "[Unlock][ESP] Lv1", "Lv1", "Bullet Cancel on Sun-2", false, true),
-    Tuple.Create(3, "[Unlock][ESP] Lv2", "Lv2", "Tereportation on Wed-1", false, true),
-    Tuple.Create(4, "[Unlock][ESP] Lv3", "Lv3", "Telephotography on Sat-1", false, true),
-    Tuple.Create(5, "[Unlock][ESP] Lv4", "Lv4", "Pyrokinesis on 2nd Wed-1", true, true),
-    Tuple.Create(6, "[Unlock][ESP] Lv5", "Lv5", "Death Cancel on 2nd Sat-6", true, true),
+    Tuple.Create(2, "[Unlock][ESP] Lv1", "Lv1", "\”Bullet Cancel\” on Sun-2", false, true),
+    Tuple.Create(3, "[Unlock][ESP] Lv2", "Lv2", "\”Tereportation\” on Wed-1", false, true),
+    Tuple.Create(4, "[Unlock][ESP] Lv3", "Lv3", "\”Telephotography\” on Sat-1", false, true),
+    Tuple.Create(5, "[Unlock][ESP] Lv4", "Lv4", "\”Pyrokinesis\” on 2nd Wed-1", true, true),
+    Tuple.Create(6, "[Unlock][ESP] Lv5", "Lv5", "\”Death Cancel\” on 2nd Sat-6", true, true),
     Tuple.Create(0, "[Unlock][First Week] Clear Sun-2", "Clear Sun-2", "", true, false),
     Tuple.Create(1, "[Unlock][First Week] Unknown", "Unknown", "", false, false),
     Tuple.Create(7, "[Unlock][First Week] Sunday and Monday", "Sunday and Monday", "", false, true),
@@ -206,7 +206,7 @@ startup
     Tuple.Create(99, "[Individual][Nightmare Diary] Diary-1", "Diary-1", "", false, true),
     Tuple.Create(100, "[Individual][Nightmare Diary] Diary-2", "Diary-2", "", false, true),
     Tuple.Create(101, "[Individual][Nightmare Diary] Diary-3", "Diary-3", "", false, true),
-    Tuple.Create(102, "[Individual][Nightmare Diary] Diary-4", "Diary-4", "not recommended due to Diary-4 Shot Split", false, true),
+    Tuple.Create(102, "[Individual][Nightmare Diary] Diary-4", "Diary-4", "not recommended due to the final photo split", false, true),
   };
 
   settings.Add("Auto Start", true, "Auto start on \"Game Start\" with new game");
@@ -318,7 +318,7 @@ init
 {
   refreshRate = 60;
 
-  vars.update_coounts = (Func<Process, bool, bool>)((proc, force) => {
+  vars.update_counts = (Func<Process, bool, bool>)((proc, force) => {
     vars.current_clear_count = vars.count_cleared_dreams(proc);
 
     var updated = (settings["Show Counts"]
@@ -342,7 +342,7 @@ init
   vars.info_offset = (IntPtr)(current.dreams_offset + 0x234 * vars.dreams_size);
   vars.w = vars.getMemoryWatcherList(game);
 
-  vars.update_coounts(game, true);
+  vars.update_counts(game, true);
 }
 
 update
@@ -360,7 +360,7 @@ update
     vars.w.UpdateAll(game);
   }
 
-  vars.update_coounts(game, false);
+  vars.update_counts(game, false);
 }
 
 start
