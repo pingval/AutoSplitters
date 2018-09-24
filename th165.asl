@@ -2,21 +2,26 @@
 
 state("th165", "ver 1.00a")
 {
+  int states_offset : 0x0b552c;
   int dreams_offset : 0x0b5660;
 }
 
 // English Patched
 // state("th165e", "ver 1.00a")
 // {
+//   int states_offset : 0x0b552c;
 //   int dreams_offset : 0x0b5660;
 // }
 
 startup
 {
   vars.dreams_size = 103;
+  vars.base_time = 0;
 
   vars.dreams_offset = IntPtr.Zero;
   vars.info_offset = IntPtr.Zero;
+
+  vars.states_offset = IntPtr.Zero;
 
   vars.old_clear_count = 0;
   vars.current_clear_count = 0;
@@ -212,7 +217,7 @@ startup
   settings.Add("Auto Start", true, "Auto start on \"Game Start\" with new game");
   settings.SetToolTip("Auto Start", "Start timing on SRC rules");
 
-  settings.Add("Auto Reset", true, "Auto reset when game is restarted with new game");
+  settings.Add("Auto Reset", true, "Auto reset when the game is restarted with new game");
 
   settings.Add("Show Counts", true, "Show Clear/Death/DeathCancel Count");
   settings.SetToolTip("Show Counts", "Override first text component with some counts");
@@ -255,7 +260,7 @@ startup
     return new MemoryWatcherList {
 //       new MemoryWatcher<int>((IntPtr)0x4b3a98) { Name = "Survive?" },
 //       new MemoryWatcher<int>((IntPtr)0x4b3b04) { Name = "Base Time" },
-      new MemoryWatcher<int>((IntPtr)0x4b3ce0) { Name = "Start?" },
+      new MemoryWatcher<int>((IntPtr)0x4b3ce0) { Name = "Starting?" },
       new MemoryWatcher<int>((IntPtr)0x4b5670) { Name = "in Game?" },
       new MemoryWatcher<int>(vars.dreams_offset + 0x20) { Name = "Sun-1 Try Count" },
       new MemoryWatcher<int>(vars.dreams_offset + 0x234 * 102 + 0x24) { Name = "Diary-4 Shot Count" },
@@ -265,6 +270,13 @@ startup
       new MemoryWatcher<int>(vars.info_offset + 0x144) { Name = "Death Count" },
 //       new MemoryWatcher<int>(info_offset + 0x148) { Name = "Teleportation Count" },
       new MemoryWatcher<int>(vars.info_offset + 0x14c) { Name = "Death Cancel Count" },
+    };
+  });
+
+  vars.getMemoryWatcherList2 = (Func<Process, MemoryWatcherList>)((proc) => {
+    return new MemoryWatcherList {
+      new MemoryWatcher<int>(vars.states_offset + 0x84) { Name = "State Flags" },
+      new MemoryWatcher<int>(vars.states_offset + 0x98) { Name = "in Replay?" },
     };
   });
 
@@ -302,6 +314,18 @@ startup
     return vars.w["in Game?"].Current != 1;
   });
 
+  vars.starting = (Func<bool>) (() => {
+    return vars.w["Starting?"].Current != 0;
+  });
+
+  vars.in_pause = (Func<bool>) (() => {
+    return (vars.x["State Flags"].Current & 0x10) != 0;
+  });
+
+  vars.in_replay = (Func<bool>) (() => {
+    return vars.x["in Replay?"].Current != 0;
+  });
+
   vars.tcs = null;
   foreach (LiveSplit.UI.Components.IComponent component in timer.Layout.Components) {
     if (component.GetType().Name == "TextComponent") {
@@ -311,7 +335,6 @@ startup
       break;
     }
   }
-
 }
 
 init
@@ -342,14 +365,18 @@ init
   vars.info_offset = (IntPtr)(current.dreams_offset + 0x234 * vars.dreams_size);
   vars.w = vars.getMemoryWatcherList(game);
 
+  vars.states_offset = (IntPtr)current.states_offset;
+  vars.x = vars.getMemoryWatcherList2(game);
+
   vars.update_counts(game, true);
 }
 
 update
 {
-  if (old.dreams_offset != current.dreams_offset) {
+  if (current.dreams_offset != old.dreams_offset) {
     vars.dreams_offset = (IntPtr)current.dreams_offset;
     vars.info_offset = (IntPtr)(current.dreams_offset + 0x234 * vars.dreams_size);
+
     print("[ASL] dreams_offset is changed: "
           + old.dreams_offset.ToString("x8")
           + " => "
@@ -360,14 +387,26 @@ update
     vars.w.UpdateAll(game);
   }
 
+  if (current.states_offset != old.states_offset) {
+    vars.states_offset = (IntPtr)current.states_offset;
+
+    print("[ASL] states_offset is changed: "
+          + old.states_offset.ToString("x8")
+          + " => "
+          + current.states_offset.ToString("x8"));
+
+    vars.x = vars.getMemoryWatcherList2(game);
+  } else {
+    vars.x.UpdateAll(game);
+  }
+
   vars.update_counts(game, false);
 }
 
 start
 {
   var res = (settings["Auto Start"]
-             && vars.w["Start?"].Old == 0
-             && vars.w["Start?"].Current != 0);
+             && vars.starting());
   if (res)
     print("[ASL] Auto Start");
   return res;
@@ -405,8 +444,9 @@ split
 reset
 {
   var res = (settings["Auto Reset"]
+             && current.dreams_offset != 0
              && vars.w["Sun-1 Try Count"].Current == 0
-             && vars.w["Start?"].Current == 0
+             && !vars.starting()
              && !vars.in_game());
   if (res)
     print("[ASL] Auto Reset");
@@ -418,6 +458,19 @@ isLoading {
 }
 
 gameTime {
-  var t = vars.w["Play Time"].Current;
-  return TimeSpan.FromMilliseconds(t * 10);
+  // 1/100s => 1/1000s
+  var t = vars.w["Play Time"].Current * 10;
+
+  // in_game(): igt don't work on Sun-1,2
+  if (vars.in_game() &&
+      !vars.in_pause()
+      && !vars.in_replay()
+      && !vars.starting()
+      && current.states_offset != 0) {
+    var add = (Stopwatch.GetTimestamp() - vars.base_time) * 1000 / Stopwatch.Frequency;
+    t += add;
+  } else {
+    vars.base_time = Stopwatch.GetTimestamp();
+  }
+  return TimeSpan.FromMilliseconds(t);
 }
