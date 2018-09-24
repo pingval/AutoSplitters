@@ -33,11 +33,11 @@ startup
     Tuple.Create(-1, "<Parent> [Unlock][Nightmare Week]", "Nightmare Week", "a.k.a 3rd Week", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][Nightmare Diary]", "Nightmare Diary", "", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][End Screen]", "End Screen", "", true, true),
-    Tuple.Create(2, "[Unlock][ESP] Lv1", "Lv1", "\”Bullet Cancel\” on Sun-2", false, true),
-    Tuple.Create(3, "[Unlock][ESP] Lv2", "Lv2", "\”Tereportation\” on Wed-1", false, true),
-    Tuple.Create(4, "[Unlock][ESP] Lv3", "Lv3", "\”Telephotography\” on Sat-1", false, true),
-    Tuple.Create(5, "[Unlock][ESP] Lv4", "Lv4", "\”Pyrokinesis\” on 2nd Wed-1", true, true),
-    Tuple.Create(6, "[Unlock][ESP] Lv5", "Lv5", "\”Death Cancel\” on 2nd Sat-6", true, true),
+    Tuple.Create(2, "[Unlock][ESP] Lv1", "Lv1", "\"Bullet Cancel\" on Sun-2", false, true),
+    Tuple.Create(3, "[Unlock][ESP] Lv2", "Lv2", "\"Tereportation\" on Wed-1", false, true),
+    Tuple.Create(4, "[Unlock][ESP] Lv3", "Lv3", "\"Telephotography\" on Sat-1", false, true),
+    Tuple.Create(5, "[Unlock][ESP] Lv4", "Lv4", "\"Pyrokinesis\" on 2nd Wed-1", true, true),
+    Tuple.Create(6, "[Unlock][ESP] Lv5", "Lv5", "\"Death Cancel\" on 2nd Sat-6", true, true),
     Tuple.Create(0, "[Unlock][First Week] Clear Sun-2", "Clear Sun-2", "", true, false),
     Tuple.Create(1, "[Unlock][First Week] Unknown", "Unknown", "", false, false),
     Tuple.Create(7, "[Unlock][First Week] Sunday and Monday", "Sunday and Monday", "", false, true),
@@ -391,7 +391,7 @@ split
     } else if (key.StartsWith("[Individual]")) {
       ok = vars.is_cleared(game, val);
     } else {
-      print("[ASL] Unknown Splits Key: " + key);
+      print("[ASL] Unknown Split Key: " + key);
     }
 
     if (ok) {
