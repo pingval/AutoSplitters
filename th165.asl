@@ -310,12 +310,12 @@ startup
     return proc.ReadValue<byte>((IntPtr)vars.info_offset + 0x134 + idx) != 0;
   });
 
-  vars.in_game = (Func<bool>) (() => {
-    return vars.w["in Game?"].Current != 1;
-  });
-
   vars.starting = (Func<bool>) (() => {
     return vars.w["Starting?"].Current != 0;
+  });
+
+  vars.in_game = (Func<bool>) (() => {
+    return vars.w["in Game?"].Current != 1;
   });
 
   vars.in_pause = (Func<bool>) (() => {
@@ -458,19 +458,19 @@ isLoading {
 }
 
 gameTime {
-  // 1/100s => 1/1000s
-  var t = vars.w["Play Time"].Current * 10;
+  // 1/100s => ticks
+  long igt_ticks = (long)vars.w["Play Time"].Current * 100000;
 
-  // in_game(): igt don't work on Sun-1,2
-  if (vars.in_game() &&
+  // Due to a bug of VD, gameTime does't work well on some dreams with dialogs.
+  if (// vars.in_game() &&
       !vars.in_pause()
       && !vars.in_replay()
       && !vars.starting()
       && current.states_offset != 0) {
-    var add = (Stopwatch.GetTimestamp() - vars.base_time) * 1000 / Stopwatch.Frequency;
-    t += add;
+    long elapsed_ticks = (Stopwatch.GetTimestamp() - vars.base_time) * 10000000 / Stopwatch.Frequency;
+    igt_ticks += elapsed_ticks;
   } else {
     vars.base_time = Stopwatch.GetTimestamp();
   }
-  return TimeSpan.FromMilliseconds(t);
+  return TimeSpan.FromTicks(igt_ticks);
 }
