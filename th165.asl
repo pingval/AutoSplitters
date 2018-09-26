@@ -6,12 +6,12 @@ state("th165", "ver 1.00a")
   int dreams_offset : 0x0b5660;
 }
 
-// English Patched
-// state("th165e", "ver 1.00a")
-// {
-//   int states_offset : 0x0b552c;
-//   int dreams_offset : 0x0b5660;
-// }
+// English Patched (for the future)
+state("th165e", "ver 1.00a with English Patch")
+{
+  int states_offset : 0x0b552c;
+  int dreams_offset : 0x0b5660;
+}
 
 startup
 {
