@@ -16,17 +16,16 @@ state("th165", "ver 1.00a")
 startup
 {
   vars.dreams_size = 103;
+  vars.clear_flags = new bool[vars.dreams_size];
+
+  vars.old_clear_count = 0;
+  vars.current_clear_count = 0;
   vars.base_time = 0;
 
   vars.dreams_offset = IntPtr.Zero;
   vars.info_offset = IntPtr.Zero;
 
   vars.states_offset = IntPtr.Zero;
-
-  vars.old_clear_count = 0;
-  vars.current_clear_count = 0;
-
-  vars.cleared_flags = new bool[vars.dreams_size];
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
@@ -39,7 +38,7 @@ startup
     Tuple.Create(-1, "<Parent> [Unlock][Nightmare Diary]", "Nightmare Diary", "", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][End Screen]", "End Screen", "", true, true),
     Tuple.Create(2, "[Unlock][ESP] Lv1", "Lv1", "\"Bullet Cancel\" on Sun-2", false, true),
-    Tuple.Create(3, "[Unlock][ESP] Lv2", "Lv2", "\"Tereportation\" on Wed-1", false, true),
+    Tuple.Create(3, "[Unlock][ESP] Lv2", "Lv2", "\"Teleportation\" on Wed-1", false, true),
     Tuple.Create(4, "[Unlock][ESP] Lv3", "Lv3", "\"Telephotography\" on Sat-1", false, true),
     Tuple.Create(5, "[Unlock][ESP] Lv4", "Lv4", "\"Pyrokinesis\" on 2nd Wed-1", true, true),
     Tuple.Create(6, "[Unlock][ESP] Lv5", "Lv5", "\"Death Cancel\" on 2nd Sat-6", true, true),
@@ -262,9 +261,9 @@ startup
 //       new MemoryWatcher<int>((IntPtr)0x4b3b04) { Name = "Base Time" },
       new MemoryWatcher<int>((IntPtr)0x4b3ce0) { Name = "Starting?" },
       new MemoryWatcher<int>((IntPtr)0x4b5670) { Name = "in Game?" },
-      new MemoryWatcher<int>(vars.dreams_offset + 0x20) { Name = "Sun-1 Try Count" },
+      new MemoryWatcher<int>(vars.dreams_offset + 0x20) { Name = "Sun-1 Attempt Count" },
       new MemoryWatcher<int>(vars.dreams_offset + 0x234 * 102 + 0x24) { Name = "Diary-4 Shot Count" },
-      new MemoryWatcher<int>(vars.info_offset + 0x54) { Name = "Play Time" },
+      new MemoryWatcher<int>(vars.info_offset + 0x54) { Name = "Total Play Time" },
 //       new MemoryWatcher<int>(vars.info_offset + 0x5c) { Name = "Current Day" },
 //       new MemoryWatcher<int>(vars.info_offset + 0x140) { Name = "ESP Level" },
       new MemoryWatcher<int>(vars.info_offset + 0x144) { Name = "Death Count" },
@@ -280,17 +279,20 @@ startup
     };
   });
 
-  vars.count_cleared_dreams = (Func<Process, int>)((proc) => {
-    var count = 0;
+  vars.update_clear_count = (Func<Process, bool>)((proc) => {
+    vars.old_clear_count = vars.current_clear_count;
 
+    var count = 0;
     for (int i = 0; i < vars.dreams_size; ++i) {
       var flg = proc.ReadValue<int>((IntPtr)vars.dreams_offset + 0x234 * i + 0x1c) != 0;
-
-      vars.cleared_flags[i] = flg;
+      vars.clear_flags[i] = flg;
       if (flg)
         ++count;
     }
-    return count;
+    vars.current_clear_count = count;
+
+    // changed?
+    return vars.current_clear_count != vars.old_clear_count;
   });
 
   vars.is_cleared = (Func<Process, int, bool>)((proc, idx) => {
@@ -342,12 +344,11 @@ init
   refreshRate = 60;
 
   vars.update_counts = (Func<Process, bool, bool>)((proc, force) => {
-    vars.current_clear_count = vars.count_cleared_dreams(proc);
-
+    var clear_count_changed = vars.update_clear_count(proc);
     var updated = (settings["Show Counts"]
                    && vars.tcs != null
                    && (force
-                       || vars.old_clear_count != vars.current_clear_count
+                       || clear_count_changed
                        || vars.w["Death Count"].Changed
                        || vars.w["Death Cancel Count"].Changed));
     if (updated) {
@@ -357,7 +358,6 @@ init
       vars.tcs.Text2 = ("Death Count: " + vars.w["Death Count"].Current.ToString()
                         + " (" + vars.w["Death Cancel Count"].Current.ToString() + ")");
     }
-    vars.old_clear_count = vars.current_clear_count;
     return updated;
   });
 
@@ -445,7 +445,7 @@ reset
 {
   var res = (settings["Auto Reset"]
              && current.dreams_offset != 0
-             && vars.w["Sun-1 Try Count"].Current == 0
+             && vars.w["Sun-1 Attempt Count"].Current == 0
              && !vars.starting()
              && !vars.in_game());
   if (res)
@@ -459,7 +459,7 @@ isLoading {
 
 gameTime {
   // 1/100s => ticks
-  long igt_ticks = (long)vars.w["Play Time"].Current * 100000;
+  long igt_ticks = (long)vars.w["Total Play Time"].Current * 100000;
 
   // Due to a bug of VD, gameTime does't work well on some dreams with dialogs.
   if (// vars.in_game() &&
