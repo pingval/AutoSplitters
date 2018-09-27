@@ -364,9 +364,11 @@ init
   vars.dreams_offset = (IntPtr)current.dreams_offset;
   vars.info_offset = (IntPtr)(current.dreams_offset + 0x234 * vars.dreams_size);
   vars.w = vars.getMemoryWatcherList(game);
+  vars.w.UpdateAll(game);
 
   vars.states_offset = (IntPtr)current.states_offset;
   vars.x = vars.getMemoryWatcherList2(game);
+  vars.x.UpdateAll(game);
 
   vars.update_counts(game, true);
 }
