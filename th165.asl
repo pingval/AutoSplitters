@@ -29,7 +29,6 @@ startup
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
-    Tuple.Create(0, "Diary-4 Shot", "Split on the final photo on Diary-4", "End timing on SRC rules", true, true),
     Tuple.Create(-1, "<Parent> [Unlock]", "Unlock Splits", "What elements have you unlocked?", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][ESP]", "ESP", "", true, true),
     Tuple.Create(-1, "<Parent> [Unlock][First Week]", "First Week", "", true, true),
@@ -215,6 +214,9 @@ startup
 
   settings.Add("Auto Start", true, "Auto start on \"Game Start\" with new game");
   settings.SetToolTip("Auto Start", "Start timing on SRC rules");
+
+  settings.Add("Diary-4 Shot", true, "Split on the final photo on Diary-4");
+  settings.SetToolTip("Diary-4 Shot", "End timing on SRC rules");
 
   settings.Add("Auto Reset", true, "Auto reset when the game is restarted with new game");
 
