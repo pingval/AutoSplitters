@@ -52,14 +52,14 @@ startup
   vars.total_attempt_count = 0;
   vars.total_success_count = 0;
   vars.history_success_count = 0;
-  vars.recent_average_ticks = 0;
+  vars.recent_average_ticks = 0L;
   vars.current_combo = 0;
   vars.max_combo = 0;
   vars.start_ticks = 0L;
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
-    Tuple.Create(-1, "<Parent> [Normal Run]", "Normal Run", "If you uncheck this option,\nLiveSplit splits each time any scenes are cleared. (e.g. Kinkaku-ji 108 run)", true, true),
+    Tuple.Create(-1, "<Parent> [Normal Run]", "Normal Run", "If you uncheck this option, LiveSplit splits each time any scenes are cleared. (e.g. Kinkaku-ji 108 run)", true, true),
     Tuple.Create(-1, "<Parent> [Normal Run][Level 1]", "Level 1", "", true, true),
     Tuple.Create(-1, "<Parent> [Normal Run][Level 2]", "Level 2", "", true, true),
     Tuple.Create(-1, "<Parent> [Normal Run][Level 3]", "Level 3", "", true, true),
@@ -270,7 +270,7 @@ init
 
         var per = (vars.total_attempt_count != 0
                    ? (double)vars.total_success_count / (double)vars.total_attempt_count * 100
-                   : 0);
+                   : 0.0);
         vars.tcss[0].Text2 = string.Format("{0:f1}% ({1:d}/{2:d})", per, vars.total_success_count, vars.total_attempt_count);
       }
       // 2nd line: Average of Recent N
@@ -389,7 +389,7 @@ split
       var elapsed_ticks = current_ticks - history_top_ticks;
       vars.recent_average_ticks = (vars.history_success_count != 0
                                    ? elapsed_ticks / vars.history_success_count
-                                   : 0);
+                                   : 0L);
 
       if (vars.history.Count == vars.history_number) {
         vars.history.Dequeue();
