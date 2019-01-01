@@ -299,7 +299,7 @@ startup
 
   vars.is_cleared = (Func<Process, int, bool>)((proc, idx) => {
     // return proc.ReadValue<byte>((IntPtr)vars.dreams_offset + 0x234 * idx + 0x1c) != 0;
-    return vars.cleared_flags[idx];
+    return vars.clear_flags[idx];
   });
 
   vars.is_unlocked = (Func<Process, int, bool>)((proc, idx) => {
