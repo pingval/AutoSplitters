@@ -1,4 +1,4 @@
-// Please move your "scoreth095.dat", "scoreth165_bk.dat" and "savedata" directory to other directory before running.
+// Please move your "scoreth095.dat", "scoreth165_bk.dat" and "savedata" directory to other directory before run.
 
 state("th165", "ver 1.00a")
 {
