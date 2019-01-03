@@ -217,7 +217,7 @@ startup
         if (flg)
           ++total_clear;
         // shot
-        var shot = proc.ReadValue<int>((IntPtr)vars.scenes_offset + 0x60 * idx + 0x0504);
+        var shot = proc.ReadValue<int>((IntPtr)vars.scenes_offset + 0x60 * idx + 0x04a4);
         total_shot += shot;
       }
     }
