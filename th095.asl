@@ -22,9 +22,8 @@ startup
   // All Scenes (except EN1): 85
   vars.scenes_number = 85;
   // Level 1-EX and EN1
-  int[] tmp = { 6, 6, 8, 9, 8, 8, 8, 8, 8, 8, 8, 8, };
-  vars.scenes = tmp;
-  vars.clear_flags = new bool[121];
+  vars.scenes = new int[] { 6, 6, 8, 9, 8, 8, 8, 8, 8, 8, 8, 8, };
+  vars.clear_flags = new bool[120];
 
   vars.split_nr_delay = 5;
   vars.split_et_delay = 80;
