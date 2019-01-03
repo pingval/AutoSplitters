@@ -45,17 +45,16 @@ startup
   vars.old_shot_count = 0;
   vars.death_count = 0;
 
-  // ticks, succeed
-  vars.history = new Queue<Tuple<long, bool>>();
+  // RealTime, succeed
+  vars.history = new Queue<Tuple<TimeSpan, bool>>();
 
   vars.succeed = false;
   vars.total_attempt_count = 0;
   vars.total_success_count = 0;
   vars.history_success_count = 0;
-  vars.recent_average_ticks = 0L;
+  vars.recent_average_timespan = TimeSpan.Zero;
   vars.current_combo = 0;
   vars.max_combo = 0;
-  vars.start_ticks = 0L;
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
@@ -256,14 +255,14 @@ init
       return false;
     }
 
-    if (settings["<Parent> [Normal Run]"]) {
+    if (settings["<Parent> [Normal Run]"]) { // Normal Run
       if (vars.tcss.Count > 0) {
         // left: Clear Count
         vars.tcss[0].Text1 = string.Format("Clear: {0:d}/{1:d}", vars.current_clear_count, vars.scenes_number);
         // right: Shot (Death) Count
         vars.tcss[0].Text2 = string.Format("Shot (Death): {0:d} ({1:d})", vars.current_shot_count, vars.death_count);
       }
-    } else {
+    } else {                    // not Normal Run
       // 1st line: Success Rate
       if (vars.tcss.Count > 0) {
         vars.tcss[0].Text1 = "Success Rate";
@@ -277,11 +276,10 @@ init
       if (vars.tcss.Count > 1) {
         vars.tcss[1].Text1 = string.Format("Ave of Recent {0:d}", vars.history_number);
 
-        long hour = TimeSpan.FromHours(1).Ticks;
-        double spd = (vars.recent_average_ticks != 0
-                      ? (double)hour / (double)vars.recent_average_ticks
-                      : 0.0);
-        vars.tcss[1].Text2 = string.Format("{0:m\\:ss\\.f} ({1:f1}/h)", TimeSpan.FromTicks(vars.recent_average_ticks), spd);
+        double times_per_hour = (vars.recent_average_timespan != TimeSpan.Zero
+                                 ? (double)TimeSpan.FromHours(1).Ticks / (double)vars.recent_average_timespan.Ticks
+                                 : 0.0);
+        vars.tcss[1].Text2 = string.Format("{0:m\\:ss\\.f} ({1:f1}/h)", vars.recent_average_timespan, times_per_hour);
       }
       // 3rd line: Combo
       if (vars.tcss.Count > 2) {
@@ -315,6 +313,7 @@ update
   if (settings["<Parent> [Normal Run]"] && changed) {
     vars.update_statistics(game);
   }
+
 }
 
 start
@@ -336,14 +335,13 @@ start
     vars.total_attempt_count = 0;
     vars.total_success_count = 0;
     vars.history_success_count = 0;
-    vars.recent_average_ticks = 0;
+    vars.recent_average_timespan = TimeSpan.Zero;
     vars.current_combo = 0;
     vars.max_combo = 0;
 
     vars.history.Clear();
     // sentinel
-    vars.start_ticks = Stopwatch.GetTimestamp() * 10000000 / Stopwatch.Frequency;
-    vars.history.Enqueue(Tuple.Create(vars.start_ticks, false));
+    vars.history.Enqueue(Tuple.Create(TimeSpan.Zero, false));
 
     vars.update_counts(game);
     vars.update_statistics(game);
@@ -368,7 +366,7 @@ split
       }
     } else { // not Normal Run
       var v = vars.history.Peek();
-      var history_top_ticks = v.Item1;
+      var history_top_timespan = v.Item1;
       var history_top_succeed = v.Item2;
 
       if (history_top_succeed)
@@ -385,23 +383,22 @@ split
         vars.current_combo = 0;
       }
 
-      var current_ticks = Stopwatch.GetTimestamp() * 10000000 / Stopwatch.Frequency;
-      var elapsed_ticks = current_ticks - history_top_ticks;
-      vars.recent_average_ticks = (vars.history_success_count != 0
-                                   ? elapsed_ticks / vars.history_success_count
-                                   : 0L);
+      var current_timespan = timer.CurrentTime.RealTime.Value;
+      var elapsed_timespan = current_timespan - history_top_timespan;
+      vars.recent_average_timespan = (vars.history_success_count != 0
+                                      ? TimeSpan.FromTicks(elapsed_timespan.Ticks / vars.history_success_count)
+                                      : TimeSpan.Zero);
 
       if (vars.history.Count == vars.history_number) {
         vars.history.Dequeue();
       }
-      var new_elem = Tuple.Create(current_ticks, vars.succeed);
+      var new_elem = Tuple.Create(current_timespan, vars.succeed);
       vars.history.Enqueue(new_elem);
 
       if (vars.DEBUG) {
         var i = 0;
         foreach (var vv in vars.history) {
-          var t = TimeSpan.FromTicks(vv.Item1 - vars.start_ticks);
-          print(string.Format("{0:d}: {1:hh\\:mm\\:ss\\.f} {2:g}", i, t, vv.Item2));
+          print(string.Format("{0:d}: {1:hh\\:mm\\:ss\\.f} {2:g}", i, vv.Item1, vv.Item2));
           ++i;
         }
       }
@@ -419,7 +416,7 @@ split
   }
 
   // Success
-  if (settings["<Parent> [Normal Run]"]) {
+  if (settings["<Parent> [Normal Run]"]) { // Normal Run
     foreach (var kv in vars.splits) {
       var key = kv.Key;
       var val = kv.Value;
@@ -442,7 +439,7 @@ split
         return false;
       }
     }
-  } else {
+  } else {                      // not Normal Run
     if (vars.st2.Old == 1 && vars.st2.Current == 3) {
       vars.split_counter = vars.split_et_delay;
       vars.succeed = true;
