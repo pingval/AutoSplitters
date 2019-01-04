@@ -315,7 +315,8 @@ startup
   settings.Add("Show Counts", true, "Show Clear/Death/DeathCancel Count");
   settings.SetToolTip("Show Counts", "Override first text component with some counts");
 
-  vars.splits = new Dictionary<string, int>();
+  vars.original_splits = new Dictionary<string, int>();
+  vars.splits = null;
 
   vars.long_prefix_re = new System.Text.RegularExpressions.Regex(@"^\[.*\]|(?<=^<Parent> )\[.*\](?=\[.*?\])");
   vars.short_prefix_re = new System.Text.RegularExpressions.Regex(@"\[.*?\]");
@@ -346,7 +347,7 @@ startup
     if (key.StartsWith("<Parent>"))
       continue;
 
-    vars.splits.Add(key, val);
+    vars.original_splits.Add(key, val);
   }
 
   vars.getMemoryWatcherList = (Func<Process, MemoryWatcherList>)((proc) => {
@@ -503,8 +504,12 @@ start
 {
   var res = (settings["Auto Start"]
              && vars.starting());
-  if (res)
+  if (res) {
+    // copy splits
+    vars.splits = new Dictionary<string, int>(vars.original_splits);
+
     print("[ASL] Auto Start");
+  }
   return res;
 }
 
