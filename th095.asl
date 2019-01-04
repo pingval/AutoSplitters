@@ -168,7 +168,8 @@ startup
   settings.Add("Show Statistics", false, "Show Statistics");
   settings.SetToolTip("Show Statistics", "Normal Run: Clear, Shot and Death Count in a Text Component.\nnot Normal Run: Success Rate, Average Time and Combo in 3 Text Components.");
 
-  vars.splits = new Dictionary<string, int>();
+  vars.original_splits = new Dictionary<string, int>();
+  vars.splits = null;
 
   vars.long_prefix_re = new System.Text.RegularExpressions.Regex(@"^\[.*\]|(?<=^<Parent> )\[.*\](?=\[.*?\])");
   vars.short_prefix_re = new System.Text.RegularExpressions.Regex(@"\[.*?\]");
@@ -199,7 +200,7 @@ startup
     if (key.StartsWith("<Parent>"))
       continue;
 
-    vars.splits.Add(key, val);
+    vars.original_splits.Add(key, val);
   }
 
   vars.update_counts = (Func<Process, bool>)((proc) => {
@@ -323,6 +324,9 @@ start
             && (!settings["<Parent> [Normal Run]"] || not_1_1_cleared));
 
   if (ok) {
+    // copy splits
+    vars.splits = new Dictionary<string, int>(vars.original_splits);
+
     // statistics
     vars.current_clear_count = 0;
     vars.old_clear_count = 0;
