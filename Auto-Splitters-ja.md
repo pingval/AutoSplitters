@@ -1,4 +1,4 @@
-[LiveSplit/Documentation/Auto-Splitters.md](https://github.com/LiveSplit/LiveSplit/blob/master/Documentation/Auto-Splitters.md)の日本語訳です。
+[LiveSplit/Documentation/Auto-Splitters.md](https://github.com/LiveSplit/LiveSplit/blob/master/Documentation/Auto-Splitters.md)の日本語訳です。Google翻訳が8割を占めています。
 
 ----
 
@@ -377,7 +377,7 @@ The name of this action is `update`. You can use this for generic updating. In e
 <!--
 Explicitly returning `false` will prevent the actions `isLoading`, `gameTime`, `reset`, `split`, and `start` from being run. This can be useful if you want to entirely disable the script under some conditions (e.g. for incompatible game versions). See [Order of Execution](#order-of-execution) for more information.
 -->
-明示的にfalseを返すと、`isLoading`, `gameTime`, `reset`, `split`, `start`アクションが実行されなくなります。これは、状況によってはスクリプトを完全に無効にしたい場合(たとえば、互換性のないゲームバージョンなど)に役立ちます。詳細は[実行順序 (Order of Execution)](#実行順序-order-of-execution)参照してください。
+明示的にfalseを返すと、`isLoading`・`gameTime`・`reset`・`split`・`start`アクションが実行されなくなります。これは、状況によってはスクリプトを完全に無効にしたい場合(たとえば、互換性のないゲームバージョンなど)に役立ちます。詳細は[実行順序 (Order of Execution)](#実行順序-order-of-execution)参照してください。
 
 <!-- ##### Automatic Timer Start -->
 ##### 自動タイマースタート (Automatic Timer Start)
