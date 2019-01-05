@@ -1,6 +1,8 @@
-# Auto Splitters
-
 [LiveSplit/Documentation/Auto-Splitters.md](https://github.com/LiveSplit/LiveSplit/blob/master/Documentation/Auto-Splitters.md)の日本語訳です。
+
+----
+
+# Auto Splitters
 
 <!-- TOC depthFrom:2 depthTo:4 orderedList:false updateOnSave:true withLinks:true -->
 
