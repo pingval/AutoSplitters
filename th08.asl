@@ -1,22 +1,22 @@
 state("th08", "ver 1.00d")
 {
-  // int started : 0x124d348;
-  // int st_b0 : 0x124d0b0;
-  // int st_b4 : 0x124d0b4;
-  // int st_b8 : 0x124d0b8;
-  // int dead : 0x13d6ed8;
 }
 
 startup
 {
   vars.DEBUG = false;
 
-  vars.spells_number = 222;
-  vars.spell_indexes = Enumerable.Range(0, 222).ToArray();
+  // All Spell Cards
+  vars.spellcards_number = 222;
+  vars.spellcard_indexes = Enumerable.Range(0, 222).ToArray();
 
   // All Last Words
-  vars.spells_number_lw = 17;
-  vars.spell_indexes_lw = Enumerable.Range(205, 17).ToArray();
+  vars.spellcards_number_lw = 17;
+  vars.spellcard_indexes_lw = Enumerable.Range(205, 17).ToArray();
+
+  // Extra Stage
+  vars.spellcards_number_ex = 14;
+  vars.spellcard_indexes_ex = Enumerable.Range(191, 14).ToArray();
 
   vars.clear_flags = Enumerable.Repeat<bool>(false, 256).ToArray();
 
@@ -29,6 +29,8 @@ startup
   // statistics
   vars.update = false;
   vars.death_count = 0;
+  // vars.bomb_count = 0;
+  // vars.spellcard_count = 0;
 
   // // RealTime, succeed
   // vars.history = new Queue<Tuple<TimeSpan, bool>>();
@@ -43,11 +45,29 @@ startup
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
+    Tuple.Create(-1, "<Parent> [Extra]", "Extra", "If you uncheck this option, LiveSplit splits each time Spell Cards are cleared in Spell Practice. (e.g. All Last Words run)", true, true),
+    Tuple.Create(0, "[Extra] Keine Appears", "Keine Appears", "", true, true),
+    Tuple.Create(191, "[Extra] Past \"Old History of an Untrodden Land -Old History-\"", "Past \"Old History of an Untrodden Land -Old History-\"", "", true, true),
+    Tuple.Create(192, "[Extra] Reincarnation \"Ichijou Returning Bridge\"", "Reincarnation \"Ichijou Returning Bridge\"", "", true, true),
+    Tuple.Create(193, "[Extra] Future \"New History of Fantasy -Next History-\"", "Future \"New History of Fantasy -Next History-\"", "", true, true),
+    Tuple.Create(193, "[Extra] Mokou Appears", "Mokou Appears", "", true, true),
+    Tuple.Create(194, "[Extra] Limiting Edict \"Curse of Tsuki-no-Iwakasa\"", "Limiting Edict \"Curse of Tsuki-no-Iwakasa\"", "", true, true),
+    Tuple.Create(195, "[Extra] Undying \"Fire Bird -Feng?Wing Ascension-\"", "Undying \"Fire Bird -Feng?Wing Ascension-\"", "", true, true),
+    Tuple.Create(196, "[Extra] Fujiwara \"Wounds of Metsuzai Temple\"", "Fujiwara \"Wounds of Metsuzai Temple\"", "", true, true),
+    Tuple.Create(197, "[Extra] Undying \"Xu Fu's Dimension\"", "Undying \"Xu Fu's Dimension\"", "", true, true),
+    Tuple.Create(198, "[Extra] Expiation \"Honest Man's Death\"", "Expiation \"Honest Man's Death\"", "", true, true),
+    Tuple.Create(199, "[Extra] Hollow Being \"Wu\"", "Hollow Being \"Wu\"", "", true, true),
+    Tuple.Create(200, "[Extra] Inextinguishable \"Phoenix's Tail\"", "Inextinguishable \"Phoenix's Tail\"", "", true, true),
+    Tuple.Create(201, "[Extra] Hourai \"South Wind, Clear Sky -Fujiyama Volcano-\"", "Hourai \"South Wind, Clear Sky -Fujiyama Volcano-\"", "", true, true),
+    Tuple.Create(202, "[Extra] \"Possessed by Phoenix\"", "\"Possessed by Phoenix\"", "", true, true),
+    Tuple.Create(203, "[Extra] \"Hourai Doll\"", "\"Hourai Doll\"", "", false, true),
+    Tuple.Create(204, "[Extra] \"Imperishable Shooting\"", "\"Imperishable Shooting\"", "", false, true),
+    Tuple.Create(0, "[Extra] Stage Clear", "Stage Clear", "", true, true),
   };
 
   settings.Add("Auto Start", true, "Auto Start");
   // settings.SetToolTip("Auto Start", "Start timing on SRC rules");
-  settings.Add("All Last Words Run", true, "All Last Words Run");
+  settings.Add("All Last Words Run", false, "All Last Words Run");
   settings.SetToolTip("All Last Words Run", "17 Spell Cards from No.206 to No.222.");
   settings.Add("Show Statistics", true, "Show Statistics");
   settings.SetToolTip("Show Statistics", "Clear and Death Count in a Text Component.");
@@ -100,6 +120,15 @@ startup
   vars.getMemoryWatcherList = (Func<Process, MemoryWatcherList>)((proc) => {
     return new MemoryWatcherList {
       new MemoryWatcher<int>((IntPtr)0x164d348) { Name = "Starting?" },
+
+      new MemoryWatcher<int>((IntPtr)0x160f458) { Name = "Boss Appearing?" },
+      new MemoryWatcher<int>((IntPtr)0x4ea674) { Name = "in Spell Card?" },
+      new MemoryWatcher<int>((IntPtr)0x4ea678) { Name = "Spell Card No" },
+
+      new MemoryWatcher<int>((IntPtr)0x164cfa4) { Name = "Death Count" },
+      new MemoryWatcher<int>((IntPtr)0x164cfa8) { Name = "Bomb Count" },
+      new MemoryWatcher<int>((IntPtr)0x160f510) { Name = "Spell Card Count Base" },
+
       new MemoryWatcher<int>((IntPtr)0x164d0b0) { Name = "st_b0" },
       new MemoryWatcher<int>((IntPtr)0x164d0b4) { Name = "st_b4" },
       new MemoryWatcher<int>((IntPtr)0x164d0b8) { Name = "st_b8" },
@@ -115,7 +144,7 @@ init
   vars.starting = (Func<bool>) (() => {
     var res = !vars.in_replay() && vars.w["Starting?"].Current != 0;
     if (settings["All Last Words Run"]) {
-      res = res && vars.in_spell_practice() && vars.current_spellcard() == 205;
+      res = res && vars.in_spell_practice() && vars.get_current_spellcard() == 205;
     }
     return res;
   });
@@ -125,25 +154,40 @@ init
   });
 
   vars.in_replay = (Func<bool>) (() => {
-    return (vars.w["st_b4"].Current & 0x08) != 0;
-  });
-
-  vars.current_spellcard = (Func<int>) (() => {
-    return vars.w["st_b8"].Current & 0xff;
+    if (vars.DEBUG) {
+      return false;
+    } else {
+      return (vars.w["st_b4"].Current & 0x08) != 0;
+    }
   });
 
   vars.in_spell_practice = (Func<bool>) (() => {
-    return vars.current_spellcard() != 0xff;
+    return (vars.w["st_b8"].Current & 0xff) != 0xff;
   });
 
-  vars.dying = (Func<bool>) (() => {
-    // return (old.dead & 0x04) == 0 && (current.dead & 0x04) != 0;
+  vars.get_current_spellcard = (Func<int>) (() => {
+    if (vars.in_spell_practice())
+      return vars.w["st_b8"].Current & 0xff;
+    else
+      return vars.w["Spell Card No"].Current;
+  });
+
+  vars.sp_dead = (Func<bool>) (() => {
     return (vars.w["SP Failed?"].Old & 0x04) == 0 && (vars.w["SP Failed?"].Current & 0x04) != 0;
   });
 
   vars.sp_cleared = (Func<bool>) (() => {
     var res = (vars.w["st_b8"].Current & 0x1000000) != 0 && vars.w["st_b4"].Changed && vars.w["st_b4"].Current == 0x0003c101;
     return res;
+  });
+
+  // true: spell card no. false: -1
+  vars.spellcard_ended = (Func<int>) (() => {
+    if (vars.w["in Spell Card?"].Old != 0 && vars.w["in Spell Card?"].Current == 0) {
+      return vars.get_current_spellcard();
+    } else {
+      return -1;
+    }
   });
 
   vars.set_clear_flag = (Func<int, bool>)((idx) => {
@@ -154,19 +198,35 @@ init
       return false;
     }
 
-    var indexes = vars.spell_indexes;
+    var indexes = vars.spellcard_indexes;
     if (settings["All Last Words Run"]) {
-      indexes = vars.spell_indexes_lw;
+      indexes = vars.spellcard_indexes_lw;
     }
     // contain?
     return Array.IndexOf(indexes, idx) != -1;
     // return Array.BinarySearch(indexes, idx) != -1;
   });
 
-  vars.count_cleared_spells = (Func<int>)(() => {
-    var indexes = vars.spell_indexes;
+  vars.get_death_count = (Func<int>)(() => {
+    if (!settings["<Parent> [Extra]"]) {
+      return vars.death_count;
+    } else {
+      return vars.w["Death Count"].Current;
+    }
+  });
+
+  vars.get_bomb_count = (Func<int>)(() => {
+    return vars.w["Bomb Count"].Current;
+  });
+
+  vars.get_spellcard_count = (Func<int>)(() => {
+    if (settings["<Parent> [Extra]"]) {
+      return game.ReadValue<int>((IntPtr)vars.w["Spell Card Count Base"].Current + 0x1c);
+    }
+
+    var indexes = vars.spellcard_indexes;
     if (settings["All Last Words Run"]) {
-      indexes = vars.spell_indexes_lw;
+      indexes = vars.spellcard_indexes_lw;
     }
 
     var count = 0;
@@ -177,25 +237,28 @@ init
     return count;
   });
 
+  vars.boss_appeared = (Func<bool>) (() => {
+    return vars.w["Boss Appearing?"].Old == 0 && vars.w["Boss Appearing?"].Current != 0;
+  });
+
   vars.update_statistics = (Func<Process, bool>)((proc) => {
     if (!settings["Show Statistics"]) {
       return false;
     }
 
-    if (true) {
-      if (vars.tcss.Count > 0) {
-        // left: Clear Count
-        var spells_number = vars.spells_number;
-        if (settings["All Last Words Run"]) {
-          spells_number = vars.spells_number_lw;
-        }
-
-        var clear_count = vars.count_cleared_spells();
-        vars.tcss[0].Text1 = string.Format("Clear: {0:d}/{1:d}", clear_count, spells_number);
-        // right: Death Count
-        vars.tcss[0].Text2 = string.Format("Death: {0:d}", vars.death_count);
+    if (vars.tcss.Count > 0) {
+      // left: Spell Card Count
+      var spellcards_number = vars.spellcards_number;
+      if (settings["<Parent> [Extra]"]) {
+        spellcards_number = vars.spellcards_number_ex;
+      } else if (settings["All Last Words Run"]) {
+        spellcards_number = vars.spellcards_number_lw;
       }
-    } else {
+      var spellcard_count = vars.get_spellcard_count();
+      vars.tcss[0].Text1 = string.Format("Spell Card: {0:d}/{1:d}", spellcard_count, spellcards_number);
+  
+      // right: Death Count
+      vars.tcss[0].Text2 = string.Format("Death: {0:d}", vars.get_death_count());
     }
 
     return true;
@@ -208,11 +271,16 @@ init
 
 update
 {
+  vars.w.UpdateAll(game);
+
+  if (settings["<Parent> [Extra]"]) {
+    vars.update |= vars.w["Death Count"].Changed || vars.w["Bomb Count"].Changed;
+  }
+
   if (vars.update) {
     vars.update_statistics(game);
     vars.update = false;
   }
-  vars.w.UpdateAll(game);
 }
 
 start
@@ -247,15 +315,15 @@ split
     return vars.succeed;
   }
 
-  // Dead
-  if (vars.dying()) {
-    vars.split_counter = 1;
-    vars.succeed = false;
-    return false;
-  }
+  if (!settings["<Parent> [Extra]"]) {
+    // Dead
+    if (vars.sp_dead()) {
+      vars.split_counter = 1;
+      vars.succeed = false;
+      return false;
+    }
 
-  // Success
-  if (true) {
+    // Success
     if (vars.sp_cleared()) {
       if (vars.DEBUG) {
         print("b0: " + vars.w["st_b0"].Current.ToString("X"));
@@ -263,7 +331,7 @@ split
         print("b8: " + vars.w["st_b8"].Current.ToString("X"));
       }
 
-      if (vars.set_clear_flag(vars.current_spellcard())) {
+      if (vars.set_clear_flag(vars.get_current_spellcard())) {
         vars.update = true;
         vars.succeed = true;
         vars.split_counter = vars.split_delay;
@@ -279,16 +347,29 @@ split
         continue;
 
       var ok = false;
-      if (key.StartsWith("[Normal Run]")) {
-        if (ok = vars.sp_cleared(game, val)) {
-          vars.split_counter = vars.split_delay;
-          vars.succeed = true;
+      if (key.EndsWith("Appears")) {
+        if (key.EndsWith("Keine Appears")) {
+          ok = vars.boss_appeared() && vars.get_current_spellcard() == 0;
+        } else if (key.EndsWith("Mokou Appears")) {
+          ok = vars.boss_appeared() && vars.get_current_spellcard() == 193;
         }
-      } else {
-        print("[ASL] Unknown Split Key: " + key);
+      } else if (key.EndsWith("Stage Clear")) {
+        var no = vars.spellcard_ended();
+        if (vars.get_spellcard_count() < 7) {
+          ok = no == 203;
+        } else {
+          ok = no == 204;
+        }
+      } else { // Spell Card ends
+        var no = vars.spellcard_ended();
+        ok = no != -1 && no == val;
       }
 
       if (ok) {
+        vars.split_counter = vars.split_delay;
+        vars.succeed = true;
+        vars.update = true;
+
         print("[ASL] Split: " + key);
         vars.splits.Remove(key);
         return false;
