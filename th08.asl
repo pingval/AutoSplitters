@@ -66,11 +66,11 @@ startup
   };
 
   settings.Add("Auto Start", true, "Auto Start");
-  // settings.SetToolTip("Auto Start", "Start timing on SRC rules");
-  settings.Add("All Last Words Run", false, "All Last Words Run");
-  settings.SetToolTip("All Last Words Run", "17 Spell Cards from No.206 to No.222.");
+  settings.SetToolTip("Auto Start", "Start timing on SRC rules");
   settings.Add("Show Statistics", true, "Show Statistics");
   settings.SetToolTip("Show Statistics", "Clear and Death Count in a Text Component.");
+  settings.Add("All Last Words Run", false, "All Last Words Run");
+  settings.SetToolTip("All Last Words Run", "17 Spell Cards from No.206 to No.222.");
 
   vars.original_splits = new Dictionary<string, int>();
   vars.splits = null;
@@ -119,9 +119,9 @@ startup
 
   vars.getMemoryWatcherList = (Func<Process, MemoryWatcherList>)((proc) => {
     return new MemoryWatcherList {
-      new MemoryWatcher<int>((IntPtr)0x164d348) { Name = "Starting?" },
+      new MemoryWatcher<int>((IntPtr)0x164d348) { Name = "Started?" },
 
-      new MemoryWatcher<int>((IntPtr)0x160f458) { Name = "Boss Appearing?" },
+      new MemoryWatcher<int>((IntPtr)0x160f458) { Name = "Boss Appeared?" },
       new MemoryWatcher<int>((IntPtr)0x4ea674) { Name = "in Spell Card?" },
       new MemoryWatcher<int>((IntPtr)0x4ea678) { Name = "Spell Card No" },
 
@@ -141,8 +141,8 @@ init
 {
   refreshRate = 60;
 
-  vars.starting = (Func<bool>) (() => {
-    var res = !vars.in_replay() && vars.w["Starting?"].Current != 0;
+  vars.started = (Func<bool>) (() => {
+    var res = !vars.in_replay() && vars.w["Started?"].Old == 0 && vars.w["Started?"].Current != 0;
     if (settings["All Last Words Run"]) {
       res = res && vars.in_spell_practice() && vars.get_current_spellcard() == 205;
     }
@@ -179,6 +179,10 @@ init
   vars.sp_cleared = (Func<bool>) (() => {
     var res = (vars.w["st_b8"].Current & 0x1000000) != 0 && vars.w["st_b4"].Changed && vars.w["st_b4"].Current == 0x0003c101;
     return res;
+  });
+
+  vars.boss_appeared = (Func<bool>) (() => {
+    return vars.w["Boss Appeared?"].Old == 0 && vars.w["Boss Appeared?"].Current != 0;
   });
 
   // true: spell card no. false: -1
@@ -237,10 +241,6 @@ init
     return count;
   });
 
-  vars.boss_appeared = (Func<bool>) (() => {
-    return vars.w["Boss Appearing?"].Old == 0 && vars.w["Boss Appearing?"].Current != 0;
-  });
-
   vars.update_statistics = (Func<Process, bool>)((proc) => {
     if (!settings["Show Statistics"]) {
       return false;
@@ -285,7 +285,7 @@ update
 
 start
 {
-  var ok = vars.starting();
+  var ok = vars.started();
 
   if (ok) {
     // copy splits
