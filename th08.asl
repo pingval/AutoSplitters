@@ -145,7 +145,17 @@ init
     var res = !vars.in_replay() && vars.w["Started?"].Old == 0 && vars.w["Started?"].Current != 0;
     if (settings["All Last Words Run"]) {
       res = res && vars.in_spell_practice() && vars.get_current_spellcard() == 205;
+    } else {
+      res = res && !vars.in_spell_practice();
     }
+    return res;
+  });
+
+  vars.interrupted = (Func<bool>) (() => {
+    if (settings["All Last Words Run"]) {
+      return false;
+    }
+    var res = !vars.in_replay() && vars.w["Started?"].Old != 0 && vars.w["Started?"].Current == 0;
     return res;
   });
 
@@ -212,7 +222,7 @@ init
   });
 
   vars.get_death_count = (Func<int>)(() => {
-    if (!settings["<Parent> [Extra]"]) {
+    if (settings["All Last Words Run"]) {
       return vars.death_count;
     } else {
       return vars.w["Death Count"].Current;
@@ -224,7 +234,7 @@ init
   });
 
   vars.get_spellcard_count = (Func<int>)(() => {
-    if (settings["<Parent> [Extra]"]) {
+    if (!settings["All Last Words Run"]) {
       return game.ReadValue<int>((IntPtr)vars.w["Spell Card Count Base"].Current + 0x1c);
     }
 
@@ -249,10 +259,10 @@ init
     if (vars.tcss.Count > 0) {
       // left: Spell Card Count
       var spellcards_number = vars.spellcards_number;
-      if (settings["<Parent> [Extra]"]) {
-        spellcards_number = vars.spellcards_number_ex;
-      } else if (settings["All Last Words Run"]) {
+      if (settings["All Last Words Run"]) {
         spellcards_number = vars.spellcards_number_lw;
+      } else if (settings["<Parent> [Extra]"]) {
+        spellcards_number = vars.spellcards_number_ex;
       }
       var spellcard_count = vars.get_spellcard_count();
       vars.tcss[0].Text1 = string.Format("Spell Card: {0:d}/{1:d}", spellcard_count, spellcards_number);
@@ -273,7 +283,7 @@ update
 {
   vars.w.UpdateAll(game);
 
-  if (settings["<Parent> [Extra]"]) {
+  if (!settings["All Last Words Run"]) {
     vars.update |= vars.w["Death Count"].Changed || vars.w["Bomb Count"].Changed;
   }
 
@@ -315,7 +325,7 @@ split
     return vars.succeed;
   }
 
-  if (!settings["<Parent> [Extra]"]) {
+  if (settings["All Last Words Run"]) {
     // Dead
     if (vars.sp_dead()) {
       vars.split_counter = 1;
@@ -380,4 +390,5 @@ split
 
 reset
 {
+  return vars.interrupted();
 }
