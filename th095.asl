@@ -1,4 +1,4 @@
-// Please move both of your "scoreth095.dat" and "bestshot" directory to other directory before "Normal" Run.
+﻿// Please move both of your "scoreth095.dat" and "bestshot" directory to other directory before "Normal" Run.
 
 state("th095", "ver 1.02a")
 {

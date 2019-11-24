@@ -1,4 +1,4 @@
-state("th09", "ver 1.50a")
+﻿state("th09", "ver 1.50a")
 {
   int wins_1p : 0x0a7e98;
   int wins_2p : 0x0a7e9c;
