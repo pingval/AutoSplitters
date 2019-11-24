@@ -1,4 +1,4 @@
-﻿state("th08", "ver 1.00d")
+state("th08", "ver 1.00d")
 {
 }
 
@@ -205,7 +205,9 @@ init
   });
 
   vars.sp_cleared = (Func<bool>) (() => {
-    if (settings["Split on Menu in Spell Practice"]) {
+    // last spell card of All Last Words Run.
+    if (settings["Split on Menu in Spell Practice"]
+        || settings["All Last Words Run"] && vars.spellcard_count == vars.spellcards_number_lw - 1) {
       return (vars.w["st_b8"].Current & 0x1000000) != 0 && vars.w["st_b4"].Changed && vars.w["st_b4"].Current == 0x0003c101;
     } else {
       return vars.w["SP Cleared?"].Old == 0 && vars.w["SP Cleared?"].Current != 0;
@@ -331,13 +333,16 @@ update
 {
   vars.w.UpdateAll(game);
 
-  if (!settings["Spell Practice Run"] && !settings["All Last Words Run"]) {
-    var current_spellcard_count = vars.get_spellcard_count();
-    vars.update |= (vars.spellcard_count != current_spellcard_count) || vars.w["Death Count"].Changed || vars.w["Bomb Count"].Changed;
-    vars.spellcard_count = current_spellcard_count;
-  }
   if (settings["Spell Practice Run"] || settings["All Last Words Run"]) {
     vars.sp_attempting |= vars.sp_attempt_started();
+  } else {
+    vars.update |= vars.w["Death Count"].Changed || vars.w["Bomb Count"].Changed;
+  }
+  if (!settings["Spell Practice Run"]) {
+    var current_spellcard_count = vars.get_spellcard_count();
+    vars.update |= (vars.spellcard_count != current_spellcard_count);
+    vars.spellcard_count = current_spellcard_count;
+    // print(current_spellcard_count.ToString());
   }
 
   if (vars.update) {
@@ -381,7 +386,6 @@ split
     if (--vars.split_counter > 0) {
       return false;
     }
-    print(vars.succeed.ToString());
 
     if (!settings["Show Statistics"]) {
       return vars.succeed;
