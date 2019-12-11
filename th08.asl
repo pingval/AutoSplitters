@@ -1,4 +1,4 @@
-state("th08", "ver 1.00d")
+﻿state("th08", "ver 1.00d")
 {
 }
 
