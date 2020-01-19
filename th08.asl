@@ -1,4 +1,4 @@
-﻿state("th08", "ver 1.00d")
+state("th08", "ver 1.00d")
 {
 }
 
@@ -207,7 +207,7 @@ init
   vars.sp_cleared = (Func<bool>) (() => {
     // last spell card of All Last Words Run.
     if (settings["Split on Menu in Spell Practice"]
-        || settings["All Last Words Run"] && vars.spellcard_count == vars.spellcards_number_lw - 1) {
+        || settings["All Last Words Run"] && vars.spellcard_count >= vars.spellcards_number_lw - 1) {
       return (vars.w["st_b8"].Current & 0x1000000) != 0 && vars.w["st_b4"].Changed && vars.w["st_b4"].Current == 0x0003c101;
     } else {
       return vars.w["SP Cleared?"].Old == 0 && vars.w["SP Cleared?"].Current != 0;
