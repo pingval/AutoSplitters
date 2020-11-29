@@ -1,4 +1,4 @@
-# AutoSplitの使い方
+﻿# AutoSplitの使い方
 
 1. Flash Player Projectorにyojijuku.swfをD&Dし四字熟語Flashを起動する。
 1. AutoSplitを起動し、setting.pngのように設定する。
