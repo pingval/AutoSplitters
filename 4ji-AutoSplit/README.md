@@ -1,4 +1,4 @@
-﻿# AutoSplitの使い方
+# AutoSplitの使い方
 
 1. Flash Player Projectorにyojijuku.swfをD&Dし四字熟語Flashを起動する。
 1. AutoSplitを起動し、setting.pngのように設定する。
@@ -18,6 +18,21 @@
   - 途中でリセットして最初から走り直したい場合、
     - Timer Global Hotkeyの「Reset」に設定してあるキーを押してLiveSplitとAutoSplitを同時にリセットしてから、「Start Auto Splitter」ボタンを押す。
     - または、LiveSplitをResetし、かつAutoSplitの「Reset」ボタンを押してから、「Start Auto Splitter」ボタンを押す。
+
+
+## 設定
+
+### 560x420
+
+![設定](./setting.png)
+
+![リージョンの範囲](./region.png)
+
+### 640x480
+
+![設定](./setting-640x480.png)
+
+![リージョンの範囲](./region-640x480.png)
 
 ## その他
 
