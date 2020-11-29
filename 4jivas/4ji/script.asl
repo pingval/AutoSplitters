@@ -32,8 +32,8 @@ init
     {"finish", 92.0},
   };
   // delay for TAIGANJOUJU
-  // 10.1s
-  vars.finish_delay = (long)1000 * 101000;
+  // 10.15s
+  vars.finish_delay = (long)1000 * 101500;
 
   vars.splits = new List<string>();
   // vars.splits = null;
