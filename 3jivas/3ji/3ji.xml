@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameProfile xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Sanjijukugo Flash - Any%</Name>
+  <Screens>
+    <Screen>
+      <Name>Game</Name>
+      <Geometry>
+        <Width>500</Width>
+        <Height>400</Height>
+      </Geometry>
+      <!-- 監視範囲の定義 -->
+      <WatchZones>
+        <!-- 監視範囲１ -->
+        <WatchZone>
+          <Name>reset-normal</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>430</X>
+            <Y>5</Y>
+            <Width>62</Width>
+            <Height>17</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>upper-right</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\reset-normal.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>reset-pushed</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>430</X>
+            <Y>5</Y>
+            <Width>62</Width>
+            <Height>17</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>upper-right</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\reset-pushed.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>start</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>78</X>
+            <Y>4</Y>
+            <Width>13</Width>
+            <Height>13</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>stage-name</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\start.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>stage1</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>78</X>
+            <Y>4</Y>
+            <Width>13</Width>
+            <Height>13</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>stage-name</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\stage1.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>stage2</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>78</X>
+            <Y>4</Y>
+            <Width>13</Width>
+            <Height>13</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>stage-name</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\stage2.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>stage3</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>78</X>
+            <Y>4</Y>
+            <Width>13</Width>
+            <Height>13</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>stage-name</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\stage3.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>stage4</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>78</X>
+            <Y>4</Y>
+            <Width>13</Width>
+            <Height>13</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>stage-name</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\stage4.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>stage5</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>0</X>
+            <Y>0</Y>
+            <Width>500</Width>
+            <Height>400</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>all</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\stage5.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+        <WatchZone>
+          <Name>finish</Name>
+          <!-- さきほどメモした座標とサイズを記述 -->
+          <Geometry>
+            <X>100</X>
+            <Y>116</Y>
+            <Width>300</Width>
+            <Height>50</Height>
+          </Geometry>
+          <Watches>
+            <Watcher>
+              <Name>center</Name>
+              <!-- 同じ範囲で監視する画像すべてについてのパスを記述 -->
+              <WatchImages>
+                <WatchImage>
+                  <FilePath>image\conglatulations!.png</FilePath>
+                </WatchImage>
+              </WatchImages>
+            </Watcher>
+          </Watches>
+        </WatchZone>
+      </WatchZones>
+    </Screen>
+  </Screens>
+</GameProfile>
