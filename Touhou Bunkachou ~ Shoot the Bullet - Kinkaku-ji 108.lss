@@ -1,0 +1,1106 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Run version="1.7.0">
+  <GameIcon><![CDATA[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]]></GameIcon>
+  <GameName>Touhou Bunkachou ~ Shoot the Bullet</GameName>
+  <CategoryName>Kinkaku-ji 108</CategoryName>
+  <Metadata>
+    <Run id="" />
+    <Platform usesEmulator="False">
+    </Platform>
+    <Region>
+    </Region>
+    <Variables />
+  </Metadata>
+  <Offset>00:00:00</Offset>
+  <AttemptCount>0</AttemptCount>
+  <AttemptHistory />
+  <Segments>
+    <Segment>
+      <Name>#001</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#002</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#003</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#004</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#005</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#006</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#007</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#008</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#009</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#010</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#011</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#012</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#013</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#014</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#015</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#016</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#017</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#018</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#019</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#020</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#021</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#022</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#023</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#024</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#025</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#026</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#027</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#028</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#029</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#030</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#031</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#032</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#033</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#034</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#035</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#036</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#037</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#038</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#039</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#040</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#041</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#042</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#043</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#044</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#045</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#046</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#047</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#048</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#049</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#050</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#051</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#052</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#053</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#054</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#055</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#056</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#057</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#058</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#059</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#060</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#061</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#062</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#063</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#064</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#065</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#066</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#067</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#068</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#069</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#070</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#071</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#072</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#073</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#074</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#075</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#076</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#077</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#078</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#079</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#080</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#081</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#082</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#083</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#084</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#085</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#086</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#087</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#088</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#089</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#090</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#091</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#092</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#093</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#094</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#095</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#096</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#097</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#098</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#099</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#100</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#101</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#102</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#103</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#104</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#105</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#106</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#107</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+    <Segment>
+      <Name>#108</Name>
+      <Icon />
+      <SplitTimes>
+        <SplitTime name="Personal Best" />
+      </SplitTimes>
+      <BestSegmentTime />
+      <SegmentHistory />
+    </Segment>
+  </Segments>
+  <AutoSplitterSettings>
+    <Version>1.5</Version>
+    <ScriptPath>C:\salon\peercast\LiveSplit\Components\th095.asl</ScriptPath>
+    <Start>True</Start>
+    <Split>True</Split>
+    <CustomSettings>
+      <Setting id="Show Statistics" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run]" type="bool">False</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 1]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 2]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 3]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 4]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 5]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 6]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 7]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 8]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 9]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level 10]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level EX]" type="bool">True</Setting>
+      <Setting id="&lt;Parent&gt; [Normal Run][Level NE1]" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 1] 1-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 1] 1-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 1] 1-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 1] 1-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 1] 1-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 1] 1-6" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 2] 2-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 2] 2-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 2] 2-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 2] 2-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 2] 2-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 2] 2-6" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 3] 3-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 3] 3-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 3] 3-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 3] 3-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 3] 3-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 3] 3-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 3] 3-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 3] 3-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 4] 4-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-8" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 4] 4-9" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 5] 5-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 5] 5-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 5] 5-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 5] 5-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 5] 5-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 5] 5-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 5] 5-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 5] 5-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 6] 6-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 6] 6-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 6] 6-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 6] 6-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 6] 6-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 6] 6-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 6] 6-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 6] 6-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 7] 7-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 7] 7-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 7] 7-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 7] 7-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 7] 7-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 7] 7-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 7] 7-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 7] 7-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 8] 8-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 8] 8-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 8] 8-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 8] 8-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 8] 8-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 8] 8-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 8] 8-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 8] 8-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 9] 9-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 9] 9-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 9] 9-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 9] 9-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 9] 9-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 9] 9-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 9] 9-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 9] 9-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level 10] 10-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 10] 10-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 10] 10-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 10] 10-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 10] 10-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 10] 10-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 10] 10-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level 10] 10-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level EX] EX-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level EX] EX-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level EX] EX-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level EX] EX-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level EX] EX-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level EX] EX-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level EX] EX-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level EX] EX-8" type="bool">True</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-1" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-2" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-3" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-4" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-5" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-6" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-7" type="bool">False</Setting>
+      <Setting id="[Normal Run][Level NE1] NE1-8" type="bool">False</Setting>
+    </CustomSettings>
+  </AutoSplitterSettings>
+</Run>
