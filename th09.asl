@@ -19,6 +19,7 @@ state("th09e", "ver 1.00")
   int st : 0x09eec4;
 }
 
+// English Patched - https://en.touhouwiki.net/wiki/Phantasmagoria_of_Flower_View/English_Patch
 state("th09e", "ver 1.50a")
 {
   int wins_1p : 0x0a7e98;
