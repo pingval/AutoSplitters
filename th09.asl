@@ -1,4 +1,11 @@
-﻿state("th09", "ver 1.50a")
+﻿state("th09", "ver 1.00")
+{
+  int wins_1p : 0x09ee98;
+  int wins_2p : 0x09ee9c;
+  int st : 0x09eec4;
+}
+
+state("th09", "ver 1.50a")
 {
   int wins_1p : 0x0a7e98;
   int wins_2p : 0x0a7e9c;
@@ -16,6 +23,18 @@ state("th09e", "ver 1.50a with English Patch v1.1")
 init
 {
   refreshRate = 60;
+
+  int module_size = modules.First().ModuleMemorySize;
+  print("Game Process Name: " + game.ProcessName);
+  print("Main Module Size: " + module_size.ToString());
+  switch (module_size) {
+  case 909312:
+    version = "ver 1.00";
+    break;
+  default:
+    version = "ver 1.50a";
+    break;
+  }
 }
 
 update
