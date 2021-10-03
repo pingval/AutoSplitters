@@ -21,19 +21,19 @@ startup
   vars.item_size = 0x40;
 
   // 勢力
-  vars.player_indexes = new int[] { 1, 2, 4, 5, 22, 0, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 20, 3, 17, 23, 18, 19, 21, };
+  vars.player_ids = new int[] { 1, 2, 4, 5, 22, 0, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 20, 3, 17, 23, 18, 19, 21, };
   // 証の地図
-  vars.map_of_akashi_indexes = new int[] { 155, 156, 157, 158, 159, 160, 161, };
+  vars.map_of_akashi_ids = new int[] { 155, 156, 157, 158, 159, 160, 161, };
   // 覇者の証
-  vars.akashi_indexes = new int[] { 148, 149, 150, 151, 152, 153, 154, };
+  vars.akashi_ids = new int[] { 148, 149, 150, 151, 152, 153, 154, };
   // PK版覇者の証
-  vars.pk_akashi_indexes = new int[] { 192, 193, 194, 195, 196, 197, 198, };
+  vars.pk_akashi_ids = new int[] { 192, 193, 194, 195, 196, 197, 198, };
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
     Tuple.Create(-1, "<Parent> [Akashi]", "覇者の証 (Hasha no Akashi)", "", true, true),
     Tuple.Create(-1, "<Parent> [Map of Akashi]", "証の地図 (Map of Akashi)", "", true, true),
-    Tuple.Create(-1, "<Parent> [Dissolution]", "勢力の解散 (Dissolution of Player)", "", true, true),
+    Tuple.Create(-1, "<Parent> [Dissolution]", "勢力の解散 (Dissolution of Players)", "", true, true),
     Tuple.Create(-1, "<Parent> [Dissolution][North Sea]", "北海 (North Sea)", "", true, true),
     Tuple.Create(-1, "<Parent> [Dissolution][Mediterranean]", "地中海 (Mediterranean)", "", true, true),
     Tuple.Create(-1, "<Parent> [Dissolution][Africa]", "アフリカ (Africa)", "", true, true),
@@ -126,20 +126,20 @@ startup
   }
 
   vars.has_map_of_akashi = (Func<Process, int, bool>)((proc, idx) => {
-    int item_index = vars.map_of_akashi_indexes[idx];
-    return proc.ReadValue<byte>((IntPtr)(vars.item_info_base + vars.item_size * item_index + 0x3c)) == 0x0c;
+    int item_id = vars.map_of_akashi_ids[idx];
+    return proc.ReadValue<byte>((IntPtr)(vars.item_info_base + vars.item_size * item_id + 0x3c)) == 0x0c;
   });
 
   vars.has_akashi = (Func<Process, int, bool>)((proc, idx) => {
-    int item_index = vars.akashi_indexes[idx];
-    int pk_item_index = vars.pk_akashi_indexes[idx];
-    return (proc.ReadValue<byte>((IntPtr)(vars.item_info_base + vars.item_size * item_index + 0x3c)) == 0x0e 
-            || proc.ReadValue<byte>((IntPtr)(vars.item_info_base + vars.item_size * pk_item_index + 0x3c)) == 0x0e);
+    int item_id = vars.akashi_ids[idx];
+    int pk_item_id = vars.pk_akashi_ids[idx];
+    return (proc.ReadValue<byte>((IntPtr)(vars.item_info_base + vars.item_size * item_id + 0x3c)) == 0x0e 
+            || proc.ReadValue<byte>((IntPtr)(vars.item_info_base + vars.item_size * pk_item_id + 0x3c)) == 0x0e);
   });
 
   vars.is_player_dissolved = (Func<Process, int, bool>)((proc, idx) => {
-    int player_index = vars.player_indexes[idx];
-    return proc.ReadValue<byte>((IntPtr)(vars.player_info_base + vars.player_size * player_index + 0x0a)) == 0x62;
+    int player_id = vars.player_ids[idx];
+    return proc.ReadValue<byte>((IntPtr)(vars.player_info_base + vars.player_size * player_id + 0x0a)) == 0x62;
   });
 
   vars.timer_OnStart = (EventHandler)((s, e) => {
