@@ -183,12 +183,12 @@ update
 
 start
 {
-  var res = (settings["Auto Start"]
-             && false);
-  if (res) {
-    print("[ASL] Auto Start");
-  }
-  return res;
+  // var res = (settings["Auto Start"]
+  //            && false);
+  // if (res) {
+  //   print("[ASL] Auto Start");
+  // }
+  // return res;
 }
 
 split
@@ -220,11 +220,11 @@ split
 
 reset
 {
-  var res = (settings["Auto Reset"]
-             && false);
-  if (res)
-    print("[ASL] Auto Reset");
-  return res;
+  // var res = (settings["Auto Reset"]
+  //            && false);
+  // if (res)
+  //   print("[ASL] Auto Reset");
+  // return res;
 }
 
 isLoading
