@@ -81,14 +81,14 @@ startup
     Tuple.Create(23, "[Dissolution][New Continent] Kunti Wayras", "クンティワイラス (Kunti Wayras)", "", false, true),
   };
 
-  settings.Add("Auto Start", true, "Auto Start");
-  settings.SetToolTip("Auto Start", "Start timing on SRC rules");
+  // settings.Add("Auto Start", true, "Auto Start");
+  // settings.SetToolTip("Auto Start", "Start timing on SRC rules");
 
-  settings.Add("Auto Reset", true, "Auto Reset");
-  settings.SetToolTip("Auto Start", "Reset on New Game");
+  // settings.Add("Auto Reset", true, "Auto Reset");
+  // settings.SetToolTip("Auto Start", "Reset on New Game");
 
-  settings.Add("Auto Stop", true, "Auto Stop");
-  settings.SetToolTip("Auto Stop", "Stop timing on SRC rules");
+  // settings.Add("Auto Stop", true, "Auto Stop");
+  // settings.SetToolTip("Auto Stop", "Stop timing on SRC rules");
 
   vars.original_splits = new Dictionary<string, int>();
   vars.splits = null;
