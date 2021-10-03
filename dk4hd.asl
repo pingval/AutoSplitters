@@ -32,7 +32,7 @@ startup
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
     Tuple.Create(-1, "<Parent> [Akashi]", "覇者の証 (Hasha no Akashi)", "", true, true),
-    Tuple.Create(-1, "<Parent> [Map of Akashi]", "証の地図 (Map of Hasha no Akashi)", "", true, true),
+    Tuple.Create(-1, "<Parent> [Map of Akashi]", "証の地図 (Map of Akashi)", "", true, true),
     Tuple.Create(-1, "<Parent> [Dissolution]", "勢力の解散 (Dissolution of Player)", "", true, true),
     Tuple.Create(-1, "<Parent> [Dissolution][North Sea]", "北海 (North Sea)", "", true, true),
     Tuple.Create(-1, "<Parent> [Dissolution][Mediterranean]", "地中海 (Mediterranean)", "", true, true),
