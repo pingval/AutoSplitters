@@ -547,14 +547,26 @@ init
   case "dk4hd_kr":
     vars.player_info_base = (IntPtr)0x7FF7F29BA310;
     vars.item_info_base = (IntPtr)0x7FF7F29B0C00;
+    vars.char_info_base = (IntPtr)0x7FF7F29B45D0;
+    vars.current_city = (IntPtr)0x7FF7F2999624;
+    vars.prev_city = (IntPtr)0x7FF7F29AE569;
+    vars.on_sea_flag = (IntPtr)0x7FF7F29AAFC8;
     break;
   case "dk4hd_sc":
     vars.player_info_base = (IntPtr)0x7FF6D07E6DB0;
     vars.item_info_base = (IntPtr)0x7FF6D07DD820;
+    vars.char_info_base = (IntPtr)0x7FF6D07E11F0;
+    vars.current_city = (IntPtr)0x7FF6D07C6514;
+    vars.prev_city = (IntPtr)0x7FF6D07DB189;
+    vars.on_sea_flag = (IntPtr)0x7FF6D07D7BE8;
     break;
   case "dk4hd_tc":
     vars.player_info_base = (IntPtr)0x7FF7BFA26D80;
     vars.item_info_base = (IntPtr)0x7FF7BFA1D7F0;
+    vars.char_info_base = (IntPtr)0x7FF7BFA211C0;
+    vars.current_city = (IntPtr)0x7FF7BFA064E4;
+    vars.prev_city = (IntPtr)0x7FF7BFA1B159;
+    vars.on_sea_flag = (IntPtr)0x7FF7BFA17BB8;
     break;
   default: // jp
     vars.player_info_base = (IntPtr)0x7FF7C8A491F0;
