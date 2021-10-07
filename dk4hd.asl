@@ -20,12 +20,16 @@ startup
   vars.current_city_addr = IntPtr.Zero;
   vars.prev_city_addr = IntPtr.Zero;
   vars.on_sea_flag_addr = IntPtr.Zero;
+  vars.scene1_addr = IntPtr.Zero;
+  vars.scene2_addr = IntPtr.Zero;
+  vars.bgm_addr = IntPtr.Zero;
+
+  // タイマーストップで使用、2m25.5s
+  vars.ENDING_DURATION = 145500;
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
-    Tuple.Create(0, "Auto Start", "Auto Start", "Start timing on SRC rules", true, false),
-    Tuple.Create(0, "Auto Reset", "Auto Reset", "Reset on New Game", true, false),
-    Tuple.Create(0, "Auto Stop", "Auto Stop", "Stop timing on SRC rules", true, false),
+    Tuple.Create(0, "Auto Stop", "Auto Stop", "Stop timing on SRC rules", true, true),
     Tuple.Create(0, "Griding Starts", "瀬戸内海開始 (Griding Starts)", "prev place == Nagasaki && current place == on the sea", false, true),
     Tuple.Create(0, "Griding Ends", "瀬戸内海終了 (Griding Ends)", "hero’s level >= 100 && in city", false, true),
     Tuple.Create(-1, "<Parent> [Item]", "アイテム (Item)", "", true, true),
@@ -58,13 +62,13 @@ startup
     Tuple.Create(-1, "<Parent> [City][Southeast Asia]", "東南アジア (Southeast Asia)", "", true, true),
     Tuple.Create(-1, "<Parent> [City][East Asia]", "東アジア (East Asia)", "", true, true),
     Tuple.Create(-1, "<Parent> [City][New Continent]", "新大陸 (New Continent)", "", true, true),
-    Tuple.Create(148155, "[Item][Hasha no Akashi] North Sea", "北海 (North Sea)", "", true, true),
-    Tuple.Create(149156, "[Item][Hasha no Akashi] Mediterranean", "地中海 (Mediterranean)", "", true, true),
-    Tuple.Create(150157, "[Item][Hasha no Akashi] Africa", "アフリカ (Africa)", "", true, true),
-    Tuple.Create(151158, "[Item][Hasha no Akashi] Indian Ocean", "インド洋 (Indian Ocean)", "", true, true),
-    Tuple.Create(152159, "[Item][Hasha no Akashi] Southeast Asia", "東南アジア (Southeast Asia)", "", true, true),
-    Tuple.Create(153160, "[Item][Hasha no Akashi] East Asia", "東アジア (East Asia)", "", true, true),
-    Tuple.Create(154161, "[Item][Hasha no Akashi] New Continent", "新大陸 (New Continent)", "", true, true),
+    Tuple.Create(148192, "[Item][Hasha no Akashi] North Sea", "北海 (North Sea)", "", true, true),
+    Tuple.Create(149193, "[Item][Hasha no Akashi] Mediterranean", "地中海 (Mediterranean)", "", true, true),
+    Tuple.Create(150194, "[Item][Hasha no Akashi] Africa", "アフリカ (Africa)", "", true, true),
+    Tuple.Create(151195, "[Item][Hasha no Akashi] Indian Ocean", "インド洋 (Indian Ocean)", "", true, true),
+    Tuple.Create(152196, "[Item][Hasha no Akashi] Southeast Asia", "東南アジア (Southeast Asia)", "", true, true),
+    Tuple.Create(153197, "[Item][Hasha no Akashi] East Asia", "東アジア (East Asia)", "", true, true),
+    Tuple.Create(154198, "[Item][Hasha no Akashi] New Continent", "新大陸 (New Continent)", "", true, true),
     Tuple.Create(155, "[Item][Akashi Map] North Sea", "北海 (North Sea)", "", false, true),
     Tuple.Create(156, "[Item][Akashi Map] Mediterranean", "地中海 (Mediterranean)", "", false, true),
     Tuple.Create(157, "[Item][Akashi Map] Africa", "アフリカ (Africa)", "", false, true),
@@ -531,11 +535,40 @@ startup
     return vars.char_lv(proc, 235) >= 100 && !vars.is_on_sea(proc);
   });
 
+  // 主人公選択画面
+  vars.is_newgame_hero = (Func<Process, bool>)((proc) => {
+    long scene1 = proc.ReadValue<long>((IntPtr)vars.scene1_addr);
+    long scene2 = proc.ReadValue<long>((IntPtr)vars.scene2_addr);
+    return scene1 == 0x0000027700000357 && scene2 == 0x000002a2000003d7;
+  });
+
+  // ニューゲーム画面
+  vars.is_newgame = (Func<Process, bool>)((proc) => {
+    long scene1 = proc.ReadValue<long>((IntPtr)vars.scene1_addr);
+    long scene2 = proc.ReadValue<long>((IntPtr)vars.scene2_addr);
+    return scene1 == 0x000002720000023e && scene2 == 0x0000029f000002c1;
+  });
+
+  // タイトル画面 (解放コマンド数で変わるので保留)
+  // vars.is_title = (Func<Process, bool>)((proc) => {
+  //   long scene1 = proc.ReadValue<long>((IntPtr)vars.scene1_addr);
+  //   long scene2 = proc.ReadValue<long>((IntPtr)vars.scene2_addr);
+  //   return scene1 == 0x00000af000001f9 && scene2 == 0x000000dc00000307;
+  // });
+
+  // エンディング開始
+  vars.is_ending_started = (Func<Process, bool>)((proc) => {
+    int bgm = proc.ReadValue<byte>((IntPtr)vars.bgm_addr);
+    return bgm == 3;
+  });
+
   vars.timer_OnStart = (EventHandler)((s, e) => {
     // copy splits
     vars.splits = new Dictionary<string, int>(vars.original_splits);
   });
   timer.OnStart += vars.timer_OnStart;
+
+  vars.ed_sw = new Stopwatch();
 }
 
 init
@@ -549,6 +582,9 @@ init
   int[] current_city_offsets = { 0x42A9624, 0x4296514, 0x42964E4, 0x4298904, };
   int[] prev_city_offsets = { 0x42BE569, 0x42AB189, 0x42AB159, 0x42AD5C9, };
   int[] on_sea_flag_offsets = { 0x42BAFC8, 0x42A7BE8, 0x42A7BB8, 0x42AA028, };
+  int[] scene1_offsets = { 0x42B0050, 0x429CD80, 0x429CD50, 0x429F1C0, };
+  int[] scene2_offsets = { 0x42B0058, 0x429CD88, 0x429CD58, 0x429F1C8, };
+  int[] bgm_offsets = { 0x42B0880, 0x429D550, 0x429D520, 0x429F990, };
 
   int offset_idx;
   switch (game.ProcessName.ToLower()) {
@@ -567,6 +603,9 @@ init
   vars.current_city_addr = (Int64)modules.First().BaseAddress + current_city_offsets[offset_idx];
   vars.prev_city_addr = (Int64)modules.First().BaseAddress + prev_city_offsets[offset_idx];
   vars.on_sea_flag_addr = (Int64)modules.First().BaseAddress + on_sea_flag_offsets[offset_idx];
+  vars.scene1_addr = (Int64)modules.First().BaseAddress + scene1_offsets[offset_idx];
+  vars.scene2_addr = (Int64)modules.First().BaseAddress + scene2_offsets[offset_idx];
+  vars.bgm_addr = (Int64)modules.First().BaseAddress + bgm_offsets[offset_idx];
 
   print(String.Format("[ASL] Process Name: {0}", game.ProcessName));
   print(String.Format("[ASL] BaseAddress: {0}, ModuleMemorySize: {1}", ((Int64)modules.First().BaseAddress).ToString("x"), ((Int64)modules.First().ModuleMemorySize).ToString("x")));
@@ -575,7 +614,10 @@ init
   print(String.Format("[ASL] Char Info Address: {0}", vars.char_info_addr.ToString("x")));
   print(String.Format("[ASL] Current City Address: {0}", vars.current_city_addr.ToString("x")));
   print(String.Format("[ASL] Prev City Address: {0}", vars.prev_city_addr.ToString("x")));
-  print(String.Format("[ASL] On Sea Flag Address: {0}", vars.on_sea_flag_addr.ToString("x")));
+  print(String.Format("[ASL] On-Sea Flag Address: {0}", vars.on_sea_flag_addr.ToString("x")));
+  print(String.Format("[ASL] Scene#1 Address: {0}", vars.scene1_addr.ToString("x")));
+  print(String.Format("[ASL] Scene#2 Address: {0}", vars.scene2_addr.ToString("x")));
+  print(String.Format("[ASL] BGM Address: {0}", vars.bgm_addr.ToString("x")));
 }
 
 update
@@ -584,16 +626,18 @@ update
 
 start
 {
-  // var res = (settings["Auto Start"]
-  //            && false);
-  // if (res) {
-  //   print("[ASL] Auto Start");
-  // }
-  // return res;
+  var res = vars.is_newgame_hero(game);
+  if (res)
+    print("[ASL] Auto Start");
+  return res;
 }
 
 split
 {
+  // ゲームを中断してもメモリに残る対策
+  if (vars.is_newgame_hero(game))
+    return;
+
   foreach (var kv in vars.splits) {
     var key = kv.Key;
     var val = kv.Value;
@@ -601,11 +645,7 @@ split
       continue;
 
     var ok = false;
-    if (key == "Griding Starts") {
-      ok = vars.is_griding_started(game, val);
-    } else if (key == "Griding Ends") {
-      ok = vars.is_griding_ended(game, val);
-    } else if (key.StartsWith("[Item]")) {
+    if (key.StartsWith("[Item]")) {
       ok = vars.has_item(game, val);
     } else if (key.StartsWith("[Dissolution]")) {
       ok = vars.is_player_dissolved(game, val);
@@ -613,6 +653,19 @@ split
       ok = vars.is_char_joined(game, val);
     } else if (key.StartsWith("[City]")) {
       ok = vars.arrived_in_city(game, val);
+    } else if (key == "Griding Starts") {
+      ok = vars.is_griding_started(game, val);
+    } else if (key == "Griding Ends") {
+      ok = vars.is_griding_ended(game, val);
+    } else if (key == "Auto Stop") {
+      if (vars.ed_sw.IsRunning) {
+        ok = vars.ed_sw.ElapsedMilliseconds > vars.ENDING_DURATION;
+        if (ok)
+          vars.ed_sw.Reset();
+      } else {
+        if (vars.is_ending_started(game))
+          vars.ed_sw.Restart();
+      }
     } else {
       print("[ASL] Unknown Split Key: " + key);
     }
@@ -627,11 +680,10 @@ split
 
 reset
 {
-  // var res = (settings["Auto Reset"]
-  //            && false);
-  // if (res)
-  //   print("[ASL] Auto Reset");
-  // return res;
+  var res = vars.is_newgame(game);
+  if (res)
+    print("[ASL] Auto Reset");
+  return res;
 }
 
 isLoading
