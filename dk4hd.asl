@@ -14,12 +14,12 @@ startup
 {
   vars.DEBUG = false;
 
-  vars.player_info_base = IntPtr.Zero;
-  vars.item_info_base = IntPtr.Zero;
-  vars.char_info_base = IntPtr.Zero;
-  vars.current_city = IntPtr.Zero;
-  vars.prev_city = IntPtr.Zero;
-  vars.on_sea_flag = IntPtr.Zero;
+  vars.player_info_addr = IntPtr.Zero;
+  vars.item_info_addr = IntPtr.Zero;
+  vars.char_info_addr = IntPtr.Zero;
+  vars.current_city_addr = IntPtr.Zero;
+  vars.prev_city_addr = IntPtr.Zero;
+  vars.on_sea_flag_addr = IntPtr.Zero;
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
@@ -476,7 +476,7 @@ startup
   vars.has_item = (Func<Process, int, bool>)((proc, _id) => {
     do {
       int id = _id % 1000;
-      int val = proc.ReadValue<byte>((IntPtr)(vars.item_info_base + 0x40 * id + 0x3c));
+      int val = proc.ReadValue<byte>((IntPtr)(vars.item_info_addr + 0x40 * id + 0x3c));
       // 所持
       if ((val & 0x04) != 0)
         return true;
@@ -488,39 +488,39 @@ startup
 
   // 勢力の解散
   vars.is_player_dissolved = (Func<Process, int, bool>)((proc, id) => {
-    return proc.ReadValue<byte>((IntPtr)(vars.player_info_base + 0x58 * id + 0x0a)) == 0x62;
+    return proc.ReadValue<byte>((IntPtr)(vars.player_info_addr + 0x58 * id + 0x0a)) == 0x62;
   });
 
   // 仲間の加入
   vars.is_char_joined = (Func<Process, int, bool>)((proc, id) => {
-    int hero_player_id = proc.ReadValue<byte>((IntPtr)(vars.char_info_base + 0x30 * 235 + 0x0c));
-    int char_player_id = proc.ReadValue<byte>((IntPtr)(vars.char_info_base + 0x30 * id + 0x0c));
+    int hero_player_id = proc.ReadValue<byte>((IntPtr)(vars.char_info_addr + 0x30 * 235 + 0x0c));
+    int char_player_id = proc.ReadValue<byte>((IntPtr)(vars.char_info_addr + 0x30 * id + 0x0c));
     return hero_player_id == char_player_id;
   });
 
   // 街へ入港
   vars.arrived_in_city = (Func<Process, int, bool>)((proc, id) => {
-    int current_city_id = proc.ReadValue<byte>((IntPtr)vars.current_city);
+    int current_city_id = proc.ReadValue<byte>((IntPtr)vars.current_city_addr);
     return current_city_id == id;
   });
 
   // 洋上
   vars.is_on_sea = (Func<Process, bool>)((proc) => {
-    return (proc.ReadValue<byte>((IntPtr)vars.on_sea_flag) & 0x08) != 0;
+    return (proc.ReadValue<byte>((IntPtr)vars.on_sea_flag_addr) & 0x08) != 0;
   });
 
   // キャラのレベル
   vars.char_lv = (Func<Process, int, int>)((proc, id) => {
-    int exp1 = proc.ReadValue<int>((IntPtr)(vars.char_info_base + 0x30 * id + 0x18));
-    int exp2 = proc.ReadValue<int>((IntPtr)(vars.char_info_base + 0x30 * id + 0x1c));
+    int exp1 = proc.ReadValue<int>((IntPtr)(vars.char_info_addr + 0x30 * id + 0x18));
+    int exp2 = proc.ReadValue<int>((IntPtr)(vars.char_info_addr + 0x30 * id + 0x1c));
     int lv = (int)Math.Sqrt(exp1 / 60 * 2) + (int)Math.Sqrt(exp2 / 60 * 2);
     return lv;
   });
 
   // 瀬戸内海開始
   vars.is_griding_started = (Func<Process, int, bool>)((proc, _) => {
-    int current_city_id = proc.ReadValue<byte>((IntPtr)vars.current_city);
-    int prev_city_id = proc.ReadValue<byte>((IntPtr)vars.prev_city);
+    int current_city_id = proc.ReadValue<byte>((IntPtr)vars.current_city_addr);
+    int prev_city_id = proc.ReadValue<byte>((IntPtr)vars.prev_city_addr);
     // 前回地 == 長崎 && 洋上
     return prev_city_id == 58 && vars.is_on_sea(proc);
   });
@@ -542,48 +542,40 @@ init
 {
   refreshRate = 60;
 
-  // info base address
+  // offsets
+  int[] player_info_offsets = { 0x42CA310, 0x42B6DB0, 0x42B6D80, 0x42B91F0, };
+  int[] item_info_offsets = { 0x42C0C00, 0x42AD820, 0x42AD7F0, 0x42AFC60, };
+  int[] char_info_offsets = { 0x42C45D0, 0x42B11F0, 0x42B11C0, 0x4283630, };
+  int[] current_city_offsets = { 0x42A9624, 0x4296514, 0x42964E4, 0x4298904, };
+  int[] prev_city_offsets = { 0x42BE569, 0x42AB189, 0x42AB159, 0x42AD5C9, };
+  int[] on_sea_flag_offsets = { 0x42BAFC8, 0x42A7BE8, 0x42A7BB8, 0x42AA028, };
+
+  int offset_idx;
   switch (game.ProcessName.ToLower()) {
   case "dk4hd_kr":
-    vars.player_info_base = (IntPtr)0x7FF7F29BA310;
-    vars.item_info_base = (IntPtr)0x7FF7F29B0C00;
-    vars.char_info_base = (IntPtr)0x7FF7F29B45D0;
-    vars.current_city = (IntPtr)0x7FF7F2999624;
-    vars.prev_city = (IntPtr)0x7FF7F29AE569;
-    vars.on_sea_flag = (IntPtr)0x7FF7F29AAFC8;
-    break;
+    offset_idx = 0; break;
   case "dk4hd_sc":
-    vars.player_info_base = (IntPtr)0x7FF6D07E6DB0;
-    vars.item_info_base = (IntPtr)0x7FF6D07DD820;
-    vars.char_info_base = (IntPtr)0x7FF6D07E11F0;
-    vars.current_city = (IntPtr)0x7FF6D07C6514;
-    vars.prev_city = (IntPtr)0x7FF6D07DB189;
-    vars.on_sea_flag = (IntPtr)0x7FF6D07D7BE8;
-    break;
+    offset_idx = 1; break;
   case "dk4hd_tc":
-    vars.player_info_base = (IntPtr)0x7FF7BFA26D80;
-    vars.item_info_base = (IntPtr)0x7FF7BFA1D7F0;
-    vars.char_info_base = (IntPtr)0x7FF7BFA211C0;
-    vars.current_city = (IntPtr)0x7FF7BFA064E4;
-    vars.prev_city = (IntPtr)0x7FF7BFA1B159;
-    vars.on_sea_flag = (IntPtr)0x7FF7BFA17BB8;
-    break;
+    offset_idx = 2; break;
   default: // jp
-    vars.player_info_base = (IntPtr)0x7FF7C8A491F0;
-    vars.item_info_base = (IntPtr)0x7FF7C8A3FC60;
-    vars.char_info_base = (IntPtr)0x7FF7C8A43630;
-    vars.current_city = (IntPtr)0x7FF7C8A28904;
-    vars.prev_city = (IntPtr)0x7FF7C8A3D5C9;
-    vars.on_sea_flag = (IntPtr)0x7FF7C8A3A028;
-    break;
+    offset_idx = 3; break;
   }
+  vars.player_info_addr = (Int64)modules.First().BaseAddress + player_info_offsets[offset_idx];
+  vars.item_info_addr = (Int64)modules.First().BaseAddress + item_info_offsets[offset_idx];
+  vars.char_info_addr = (Int64)modules.First().BaseAddress + char_info_offsets[offset_idx];
+  vars.current_city_addr = (Int64)modules.First().BaseAddress + current_city_offsets[offset_idx];
+  vars.prev_city_addr = (Int64)modules.First().BaseAddress + prev_city_offsets[offset_idx];
+  vars.on_sea_flag_addr = (Int64)modules.First().BaseAddress + on_sea_flag_offsets[offset_idx];
+
   print(String.Format("[ASL] Process Name: {0}", game.ProcessName));
-  print(String.Format("[ASL] Player Info Base Address: {0}", vars.player_info_base.ToString("x")));
-  print(String.Format("[ASL] Item Info Base Address: {0}", vars.item_info_base.ToString("x")));
-  print(String.Format("[ASL] Char Info Base Address: {0}", vars.char_info_base.ToString("x")));
-  print(String.Format("[ASL] Current City Address: {0}", vars.current_city.ToString("x")));
-  print(String.Format("[ASL] Prev City Address: {0}", vars.prev_city.ToString("x")));
-  print(String.Format("[ASL] On Sea Flag Address: {0}", vars.on_sea_flag.ToString("x")));
+  print(String.Format("[ASL] BaseAddress: {0}, ModuleMemorySize: {1}", ((Int64)modules.First().BaseAddress).ToString("x"), ((Int64)modules.First().ModuleMemorySize).ToString("x")));
+  print(String.Format("[ASL] Player Info Address: {0}", vars.player_info_addr.ToString("x")));
+  print(String.Format("[ASL] Item Info Address: {0}", vars.item_info_addr.ToString("x")));
+  print(String.Format("[ASL] Char Info Address: {0}", vars.char_info_addr.ToString("x")));
+  print(String.Format("[ASL] Current City Address: {0}", vars.current_city_addr.ToString("x")));
+  print(String.Format("[ASL] Prev City Address: {0}", vars.prev_city_addr.ToString("x")));
+  print(String.Format("[ASL] On Sea Flag Address: {0}", vars.on_sea_flag_addr.ToString("x")));
 }
 
 update
