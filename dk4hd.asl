@@ -549,12 +549,11 @@ startup
     return scene1 == 0x000002720000023e && scene2 == 0x0000029f000002c1;
   });
 
-  // タイトル画面 (解放コマンド数で変わるので保留)
-  // vars.is_title = (Func<Process, bool>)((proc) => {
-  //   long scene1 = proc.ReadValue<long>((IntPtr)vars.scene1_addr);
-  //   long scene2 = proc.ReadValue<long>((IntPtr)vars.scene2_addr);
-  //   return scene1 == 0x00000af000001f9 && scene2 == 0x000000dc00000307;
-  // });
+  // タイトル画面
+  vars.title_screens = (Func<Process, bool>)((proc) => {
+    int bgm = proc.ReadValue<byte>((IntPtr)vars.bgm_addr);
+    return bgm == 22;
+  });
 
   // エンディング開始
   vars.is_ending_started = (Func<Process, bool>)((proc) => {
@@ -635,7 +634,7 @@ start
 split
 {
   // ゲームを中断してもメモリに残る対策
-  if (vars.is_newgame_hero(game))
+  if (vars.title_screens(game))
     return;
 
   foreach (var kv in vars.splits) {
