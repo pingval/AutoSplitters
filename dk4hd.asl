@@ -532,6 +532,7 @@ startup
   // 瀬戸内海終了
   vars.is_griding_ended = (Func<Process, int, bool>)((proc, _) => {
     // 主lv100以上 && 洋上ではない
+    print(vars.char_lv(proc, 235).ToString());
     return vars.char_lv(proc, 235) >= 100 && !vars.is_on_sea(proc);
   });
 
@@ -577,7 +578,7 @@ init
   // offsets
   int[] player_info_offsets = { 0x42CA310, 0x42B6DB0, 0x42B6D80, 0x42B91F0, };
   int[] item_info_offsets = { 0x42C0C00, 0x42AD820, 0x42AD7F0, 0x42AFC60, };
-  int[] char_info_offsets = { 0x42C45D0, 0x42B11F0, 0x42B11C0, 0x4283630, };
+  int[] char_info_offsets = { 0x42C45D0, 0x42B11F0, 0x42B11C0, 0x42B3630, };
   int[] current_city_offsets = { 0x42A9624, 0x4296514, 0x42964E4, 0x4298904, };
   int[] prev_city_offsets = { 0x42BE569, 0x42AB189, 0x42AB159, 0x42AD5C9, };
   int[] on_sea_flag_offsets = { 0x42BAFC8, 0x42A7BE8, 0x42A7BB8, 0x42AA028, };
