@@ -174,6 +174,7 @@ init
     return vars.w["in Spell Card?"].Current != 0;
   });
 
+  // もっと単純化したい
   vars.boss_appears = (Func<string, int, bool>) ((key, prev_scno) => {
     if (!(vars.w["Boss Exists?"].Old == 0 && vars.w["Boss Exists?"].Current != 0))
       return false;
@@ -198,7 +199,8 @@ init
   });
 
   vars.spellcard_ended = (Func<int, bool>) ((scno) => {
-    return (vars.w["in Spell Card?"].Old != 0 && vars.w["Spell Card No"].Old == scno
+    return (vars.w["in Spell Card?"].Old != 0
+            && vars.w["Spell Card No"].Old == scno
             && (vars.w["in Spell Card?"].Current == 0 || vars.w["Spell Card No"].Current != scno));
   });
 
@@ -261,6 +263,7 @@ isLoading {
 }
 
 gameTime {
+  // 中央画面表示までの時間を加算
   if (!vars.already_playscreen) {
     vars.duration_before_playscreen = timer.CurrentTime.RealTime.Value;
     if (vars.playscreen_shown())
