@@ -139,7 +139,8 @@ init
   });
 
   vars.interrupted = (Func<bool>) (() => {
-    var res = vars.w["Started?"].Old == 2 && vars.w["Started?"].Current == 1;
+    var res = (vars.w["Started?"].Old == 2 && vars.w["Started?"].Current == 1
+               || vars.w["Started?"].Old == 2 && vars.w["Started?"].Current == 10);
     return res;
   });
 
@@ -149,7 +150,7 @@ init
   });
   
   vars.in_pause = (Func<bool>) (() => {
-    return (vars.w["st_48"].Current & 0x04) !== 0;
+    return (vars.w["st_48"].Current & 0x04) != 0;
   });
 
   // vars.in_replay = (Func<bool>) (() => {
