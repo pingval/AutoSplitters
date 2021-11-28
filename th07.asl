@@ -1,4 +1,4 @@
-﻿state("th07", "ver 1.00b")
+state("th07", "ver 1.00b")
 {
 }
 
@@ -111,6 +111,7 @@ startup
 
       new MemoryWatcher<int>((IntPtr)0x62f85c) { Name = "Stage" },
       new MemoryWatcher<int>((IntPtr)0x62f858) { Name = "Frame Count" }, // for iGT
+      // new MemoryWatcher<int>((IntPtr)0x12fe10C) { Name = "Frame Count" }, // for iGT
 
       new MemoryWatcher<int>((IntPtr)0x12fe098) { Name = "Boss Exists?" },
       new MemoryWatcher<int>((IntPtr)0x12fe0c8) { Name = "in Spell Card?" },
@@ -132,23 +133,27 @@ init
 {
   refreshRate = 60;
 
+  // 計測開始
   vars.started = (Func<bool>) (() => {
     var res = (vars.w["Started?"].Old == 1 && vars.w["Started?"].Current == 2
                || vars.w["Started?"].Old == 2 && vars.w["Started?"].Current == 10);
     return res;
   });
 
+  // リセット
   vars.interrupted = (Func<bool>) (() => {
     var res = (vars.w["Started?"].Old == 2 && vars.w["Started?"].Current == 1
                || vars.w["Started?"].Old == 2 && vars.w["Started?"].Current == 10);
     return res;
   });
 
+  // 中央画面表示
   vars.playscreen_shown = (Func<bool>) (() => {
     var res = vars.w["in Play Screen?"].Old == 1 && vars.w["in Play Screen?"].Current == 2;
     return res;
   });
-  
+
+  // ポーズ中
   vars.in_pause = (Func<bool>) (() => {
     return (vars.w["st_48"].Current & 0x04) != 0;
   });
@@ -157,6 +162,7 @@ init
   //   return false;
   // });
 
+  // ステージ名
   vars.stage_name = (Func<string>) (() => {
     int idx = vars.w["Stage"].Current;
     if (idx < 1 || idx > 8)
@@ -165,17 +171,19 @@ init
     return vars.stage_name_table[idx];
   });
 
+  // splitkeyとステージ名が一致
   vars.stage_matched = (Func<string, bool>) ((key) => {
     string pattern = "[" + vars.stage_name() + "]";
     // print(pattern);
     return key.Contains(pattern);
   });
 
+  // スペルカード中
   vars.in_spellcard = (Func<bool>) (() => {
     return vars.w["in Spell Card?"].Current != 0;
   });
 
-  // もっと単純化したい
+  // ボス登場 もっと単純化したい
   vars.boss_appears = (Func<string, int, bool>) ((key, prev_scno) => {
     if (!(vars.w["Boss Exists?"].Old == 0 && vars.w["Boss Exists?"].Current != 0))
       return false;
@@ -199,12 +207,14 @@ init
     }
   });
 
+  // scno番(0-indexed)のスペルカード終了
   vars.spellcard_ended = (Func<int, bool>) ((scno) => {
     return (vars.w["in Spell Card?"].Old != 0
             && vars.w["Spell Card No"].Old == scno
             && (vars.w["in Spell Card?"].Current == 0 || vars.w["Spell Card No"].Current != scno));
   });
 
+  // 通常攻撃終了(次がnext_scno番(0-indexed)のスペルカード)
   vars.nonspell_ended = (Func<int, bool>) ((next_scno) => {
     return (vars.w["in Spell Card?"].Old == 0
             && vars.w["in Spell Card?"].Current != 0
@@ -255,7 +265,6 @@ split
       print("[ASL] Split: " + key);
       vars.splits.Remove(key);
       return true;
-      return false;
     }
   }
 }
@@ -271,8 +280,12 @@ gameTime {
       vars.already_playscreen = true;
   }
 
+  // print(vars.duration_before_playscreen.ToString());
   long igt_ticks = (long)vars.w["Frame Count"].Current * 10000000 / 60;
+  // print(igt_ticks.ToString());
   return vars.duration_before_playscreen + TimeSpan.FromTicks(igt_ticks);
+
+  // return vars.duration_before_playscreen + TimeSpan.FromMilliseconds(Convert.ToDouble(vars.w["Frame Count"].Current) * (1000.0 / 60.0));
 }
 
 shutdown
