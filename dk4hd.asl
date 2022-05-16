@@ -1,4 +1,4 @@
-﻿// Japanese
+// Japanese
 state("DK4HD_jp", "1.0.2.0") {}
 
 // Korean
@@ -305,7 +305,7 @@ startup
     Tuple.Create(20, "[Dissolution][Southeast Asia] Saiki Family", "サイキ家 (Saiki Family)", "", false, true),
     Tuple.Create(3, "[Dissolution][East Asia] Lee Family", "リー家 (Lee Family)", "", false, true),
     Tuple.Create(17, "[Dissolution][East Asia] Kurshima Family", "クルシマ家 (Kurshima Family)", "", false, true),
-    Tuple.Create(23, "[Dissolution][East Asia] Korean Navy", "李朝水師 (Korean Navy)", "", false, true),
+    Tuple.Create(23, "[Dissolution][East Asia] Korean Navy", "朝鮮水師 (Korean Navy)", "", false, true),
     Tuple.Create(18, "[Dissolution][New Continent] Maldonado Army", "マルドナード軍 (Maldonado Army)", "", false, true),
     Tuple.Create(19, "[Dissolution][New Continent] Escante Army", "エスカンテ軍 (Escante Army)", "", false, true),
     Tuple.Create(21, "[Dissolution][New Continent] Kunti Wayras", "クンティワイラス (Kunti Wayras)", "", false, true),
