@@ -527,8 +527,9 @@ startup
   vars.is_griding_started = (Func<Process, int, bool>)((proc, _) => {
     int current_city_id = proc.ReadValue<byte>((IntPtr)vars.current_city_addr);
     int prev_city_id = proc.ReadValue<byte>((IntPtr)vars.prev_city_addr);
-    // 前回地 == 長崎 && 洋上
-    return prev_city_id == 58 && vars.is_on_sea(proc);
+    // print(vars.is_on_sea(proc).ToString());
+    // (前回地 == 長崎 || 前回地 == サン・ファン) && 洋上
+    return (prev_city_id == 58 || prev_city_id == 63) && vars.is_on_sea(proc);
   });
 
   // 瀬戸内海終了
