@@ -19,7 +19,7 @@ startup
   vars.char_info_addr = IntPtr.Zero;
   vars.current_city_addr = IntPtr.Zero;
   vars.prev_city_addr = IntPtr.Zero;
-  vars.on_sea_flag_addr = IntPtr.Zero;
+  // vars.on_sea_flag_addr = IntPtr.Zero;
   vars.scene1_addr = IntPtr.Zero;
   vars.scene2_addr = IntPtr.Zero;
   vars.bgm_addr = IntPtr.Zero;
@@ -510,7 +510,9 @@ startup
 
   // 洋上
   vars.is_on_sea = (Func<Process, bool>)((proc) => {
-    return (proc.ReadValue<byte>((IntPtr)vars.on_sea_flag_addr) & 0x08) != 0;
+    // return (proc.ReadValue<byte>((IntPtr)vars.on_sea_flag_addr) & 0x08) != 0;
+    // ロンドンだとうまく機能しないが……
+    return proc.ReadValue<byte>((IntPtr)vars.current_city_addr) == 0;
   });
 
   // キャラのレベル
@@ -532,7 +534,7 @@ startup
   // 瀬戸内海終了
   vars.is_griding_ended = (Func<Process, int, bool>)((proc, _) => {
     // 主lv100以上 && 洋上ではない
-    print(vars.char_lv(proc, 235).ToString());
+    // print(vars.char_lv(proc, 235).ToString());
     return vars.char_lv(proc, 235) >= 100 && !vars.is_on_sea(proc);
   });
 
@@ -581,7 +583,7 @@ init
   int[] char_info_offsets = { 0x42C45D0, 0x42B11F0, 0x42B11C0, 0x42B3630, };
   int[] current_city_offsets = { 0x42A9624, 0x4296514, 0x42964E4, 0x4298904, };
   int[] prev_city_offsets = { 0x42BE569, 0x42AB189, 0x42AB159, 0x42AD5C9, };
-  int[] on_sea_flag_offsets = { 0x42BAFC8, 0x42A7BE8, 0x42A7BB8, 0x42AA028, };
+  // int[] on_sea_flag_offsets = { 0x42BAFC8, 0x42A7BE8, 0x42A7BB8, 0x42AA028, };
   int[] scene1_offsets = { 0x42B0050, 0x429CD80, 0x429CD50, 0x429F1C0, };
   int[] scene2_offsets = { 0x42B0058, 0x429CD88, 0x429CD58, 0x429F1C8, };
   int[] bgm_offsets = { 0x42B0880, 0x429D550, 0x429D520, 0x429F990, };
@@ -602,7 +604,7 @@ init
   vars.char_info_addr = (Int64)modules.First().BaseAddress + char_info_offsets[offset_idx];
   vars.current_city_addr = (Int64)modules.First().BaseAddress + current_city_offsets[offset_idx];
   vars.prev_city_addr = (Int64)modules.First().BaseAddress + prev_city_offsets[offset_idx];
-  vars.on_sea_flag_addr = (Int64)modules.First().BaseAddress + on_sea_flag_offsets[offset_idx];
+  // vars.on_sea_flag_addr = (Int64)modules.First().BaseAddress + on_sea_flag_offsets[offset_idx];
   vars.scene1_addr = (Int64)modules.First().BaseAddress + scene1_offsets[offset_idx];
   vars.scene2_addr = (Int64)modules.First().BaseAddress + scene2_offsets[offset_idx];
   vars.bgm_addr = (Int64)modules.First().BaseAddress + bgm_offsets[offset_idx];
@@ -614,7 +616,7 @@ init
   print(String.Format("[ASL] Char Info Address: {0}", vars.char_info_addr.ToString("x")));
   print(String.Format("[ASL] Current City Address: {0}", vars.current_city_addr.ToString("x")));
   print(String.Format("[ASL] Prev City Address: {0}", vars.prev_city_addr.ToString("x")));
-  print(String.Format("[ASL] On-Sea Flag Address: {0}", vars.on_sea_flag_addr.ToString("x")));
+  // print(String.Format("[ASL] On-Sea Flag Address: {0}", vars.on_sea_flag_addr.ToString("x")));
   print(String.Format("[ASL] Scene#1 Address: {0}", vars.scene1_addr.ToString("x")));
   print(String.Format("[ASL] Scene#2 Address: {0}", vars.scene2_addr.ToString("x")));
   print(String.Format("[ASL] BGM Address: {0}", vars.bgm_addr.ToString("x")));
