@@ -47,35 +47,37 @@ startup
 
   // val, settingkey, label, tooltip, enabled, visible
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
-    Tuple.Create(-1, "<Parent> [Extra]", "Extra", "Extra Stage", true, true),
-    Tuple.Create(0, "[Extra] Keine Appears", "Keine Appears", "", true, true),
-    Tuple.Create(191, "[Extra] Past \"Old History of an Untrodden Land -Old History-\"", "Past \"Old History of an Untrodden Land -Old History-\"", "", true, true),
-    Tuple.Create(192, "[Extra] Reincarnation \"Ichijou Returning Bridge\"", "Reincarnation \"Ichijou Returning Bridge\"", "", true, true),
-    Tuple.Create(193, "[Extra] Future \"New History of Fantasy -Next History-\"", "Future \"New History of Fantasy -Next History-\"", "", true, true),
-    Tuple.Create(193, "[Extra] Mokou Appears", "Mokou Appears", "", true, true),
-    Tuple.Create(194, "[Extra] Limiting Edict \"Curse of Tsuki-no-Iwakasa\"", "Limiting Edict \"Curse of Tsuki-no-Iwakasa\"", "", true, true),
-    Tuple.Create(195, "[Extra] Undying \"Fire Bird -Feng?Wing Ascension-\"", "Undying \"Fire Bird -Feng?Wing Ascension-\"", "", true, true),
-    Tuple.Create(196, "[Extra] Fujiwara \"Wounds of Metsuzai Temple\"", "Fujiwara \"Wounds of Metsuzai Temple\"", "", true, true),
-    Tuple.Create(197, "[Extra] Undying \"Xu Fu's Dimension\"", "Undying \"Xu Fu's Dimension\"", "", true, true),
-    Tuple.Create(198, "[Extra] Expiation \"Honest Man's Death\"", "Expiation \"Honest Man's Death\"", "", true, true),
-    Tuple.Create(199, "[Extra] Hollow Being \"Wu\"", "Hollow Being \"Wu\"", "", true, true),
-    Tuple.Create(200, "[Extra] Inextinguishable \"Phoenix's Tail\"", "Inextinguishable \"Phoenix's Tail\"", "", true, true),
-    Tuple.Create(201, "[Extra] Hourai \"South Wind, Clear Sky -Fujiyama Volcano-\"", "Hourai \"South Wind, Clear Sky -Fujiyama Volcano-\"", "", true, true),
-    Tuple.Create(202, "[Extra] \"Possessed by Phoenix\"", "\"Possessed by Phoenix\"", "", true, true),
-    Tuple.Create(203, "[Extra] \"Hourai Doll\"", "\"Hourai Doll\"", "", false, true),
-    Tuple.Create(204, "[Extra] \"Imperishable Shooting\"", "\"Imperishable Shooting\"", "", false, true),
+    Tuple.Create(-1, "Show Statistics", "Show Statistics", "Clear and Death Count in a Text Component.", true, true),
+    Tuple.Create(-1, "Spell Practice Run", "Spell Practice Run", "Split each time Spell Cards are cleared in Spell Practice.", false, true),
+    Tuple.Create(-1, "All Last Words Run", "All Last Words Run", "17 Spell Cards from No.206 to No.222.", false, true),
+    Tuple.Create(-1, "Split on Menu in Spell Practice", "Split on Menu in Spell Practice", "", false, true),
+    Tuple.Create(-1, "<Parent> [Extra]", "Extra", "If you uncheck this option, LiveSplit splits each time Spell Cards are cleared in Spell Practice. (e.g. All Last Words run)", true, true),
+    Tuple.Create(0, "[Extra]{Boss Appears} Keine Appears", "Keine Appears", "", true, true),
+    Tuple.Create(191, "[Extra]{Spell Card} Past \"Old History of an Untrodden Land -Old History-\"", "Past \"Old History of an Untrodden Land -Old History-\"", "", true, true),
+    Tuple.Create(192, "[Extra]{Spell Card} Reincarnation \"Ichijou Returning Bridge\"", "Reincarnation \"Ichijou Returning Bridge\"", "", true, true),
+    Tuple.Create(193, "[Extra]{Spell Card} Future \"New History of Fantasy -Next History-\"", "Future \"New History of Fantasy -Next History-\"", "", true, true),
+    Tuple.Create(0, "[Extra]{Boss Appears} Mokou Appears", "Mokou Appears", "", true, true),
+    Tuple.Create(194, "[Extra]{Nonspell} Mokou Nonspell 1", "Mokou Nonspell 1", "", true, true),
+    Tuple.Create(194, "[Extra]{Spell Card} Limiting Edict \"Curse of Tsuki-no-Iwakasa\"", "Limiting Edict \"Curse of Tsuki-no-Iwakasa\"", "", true, true),
+    Tuple.Create(195, "[Extra]{Nonspell} Mokou Nonspell 2", "Mokou Nonspell 2", "", true, true),
+    Tuple.Create(195, "[Extra]{Spell Card} Undying \"Fire Bird -Feng?Wing Ascension-\"", "Undying \"Fire Bird -Feng?Wing Ascension-\"", "", true, true),
+    Tuple.Create(196, "[Extra]{Nonspell} Mokou Nonspell 3", "Mokou Nonspell 3", "", true, true),
+    Tuple.Create(196, "[Extra]{Spell Card} Fujiwara \"Wounds of Metsuzai Temple\"", "Fujiwara \"Wounds of Metsuzai Temple\"", "", true, true),
+    Tuple.Create(197, "[Extra]{Nonspell} Mokou Nonspell 4", "Mokou Nonspell 4", "", true, true),
+    Tuple.Create(197, "[Extra]{Spell Card} Undying \"Xu Fu's Dimension\"", "Undying \"Xu Fu's Dimension\"", "", true, true),
+    Tuple.Create(198, "[Extra]{Nonspell} Mokou Nonspell 5", "Mokou Nonspell 5", "", true, true),
+    Tuple.Create(198, "[Extra]{Spell Card} Expiation \"Honest Man's Death\"", "Expiation \"Honest Man's Death\"", "", true, true),
+    Tuple.Create(199, "[Extra]{Nonspell} Mokou Nonspell 6", "Mokou Nonspell 6", "", true, true),
+    Tuple.Create(199, "[Extra]{Spell Card} Hollow Being \"Wu\"", "Hollow Being \"Wu\"", "", true, true),
+    Tuple.Create(200, "[Extra]{Nonspell} Mokou Nonspell 7", "Mokou Nonspell 7", "", true, true),
+    Tuple.Create(200, "[Extra]{Spell Card} Inextinguishable \"Phoenix's Tail\"", "Inextinguishable \"Phoenix's Tail\"", "", true, true),
+    Tuple.Create(201, "[Extra]{Nonspell} Mokou Nonspell 8", "Mokou Nonspell 8", "", true, true),
+    Tuple.Create(201, "[Extra]{Spell Card} Hourai \"South Wind, Clear Sky -Fujiyama Volcano-\"", "Hourai \"South Wind, Clear Sky -Fujiyama Volcano-\"", "", true, true),
+    Tuple.Create(202, "[Extra]{Spell Card} \"Possessed by Phoenix\"", "\"Possessed by Phoenix\"", "", true, true),
+    Tuple.Create(203, "[Extra]{Spell Card} \"Hourai Doll\"", "\"Hourai Doll\"", "", false, true),
+    Tuple.Create(204, "[Extra]{Spell Card} \"Imperishable Shooting\"", "\"Imperishable Shooting\"", "", false, true),
     Tuple.Create(0, "[Extra] Stage Clear", "Stage Clear", "", true, true),
   };
-
-  settings.Add("Auto Start", true, "Auto Start");
-  settings.SetToolTip("Auto Start", "Start timing on SRC rules");
-  settings.Add("Show Statistics", true, "Show Statistics");
-  settings.SetToolTip("Show Statistics", "Clear and Death Count in a Text Component.");
-  settings.Add("Spell Practice Run", false, "Spell Practice Run");
-  settings.SetToolTip("Spell Practice Run", "Split each time Spell Cards are cleared in Spell Practice.");
-  settings.Add("All Last Words Run", false, "All Last Words Run");
-  settings.SetToolTip("All Last Words Run", "17 Spell Cards from No.206 to No.222.");
-  settings.Add("Split on Menu in Spell Practice", false, "Split on Menu in Spell Practice");
 
   vars.original_splits = new Dictionary<string, int>();
   vars.splits = null;
@@ -126,7 +128,7 @@ startup
     return new MemoryWatcherList {
       new MemoryWatcher<int>((IntPtr)0x164d348) { Name = "Started?" },
 
-      new MemoryWatcher<int>((IntPtr)0x160f458) { Name = "Boss Appeared?" },
+      new MemoryWatcher<int>((IntPtr)0x160f458) { Name = "Boss Exists?" },
       new MemoryWatcher<int>((IntPtr)0x4ea634) { Name = "SP Gone to Title?" },
       new MemoryWatcher<int>((IntPtr)0x4ea674) { Name = "in Spell Card?" },
       new MemoryWatcher<int>((IntPtr)0x4ea678) { Name = "Spell Card No" },
@@ -142,14 +144,39 @@ startup
       new MemoryWatcher<int>((IntPtr)0x164d0b8) { Name = "st_b8" },
     };
   });
+
+  vars.timer_OnStart = (EventHandler)((s, e) => {
+    // copy splits
+    vars.splits = new Dictionary<string, int>(vars.original_splits);
+
+    // statistics
+    vars.death_count = 0;
+    vars.clear_flags = Enumerable.Repeat<bool>(false, 256).ToArray();
+
+    vars.succeed = false;
+    vars.total_attempt_count = 0;
+    vars.total_success_count = 0;
+    vars.history_success_count = 0;
+    vars.recent_average_timespan = TimeSpan.Zero;
+    vars.current_combo = 0;
+    vars.max_combo = 0;
+
+    vars.history.Clear();
+    // sentinel
+    vars.history.Enqueue(Tuple.Create(TimeSpan.Zero, false));
+
+    vars.update_statistics(game);
+  });
+  timer.OnStart += vars.timer_OnStart;
 }
 
 init
 {
   refreshRate = 60;
 
+  // 計測開始
   vars.started = (Func<bool>) (() => {
-    var res = !vars.in_replay() && vars.w["Started?"].Old == 0 && vars.w["Started?"].Current != 0;
+    var res = vars.w["Started?"].Old == 0 && vars.w["Started?"].Current != 0;
     if (settings["Spell Practice Run"]) {
       res = res && vars.in_sp();
     } else if (settings["All Last Words Run"]) {
@@ -160,40 +187,43 @@ init
     return res;
   });
 
+  // リセット
   vars.interrupted = (Func<bool>) (() => {
     if (settings["Spell Practice Run"] || settings["All Last Words Run"]) {
       return false;
     }
-    var res = !vars.in_replay() && vars.w["Started?"].Old != 0 && vars.w["Started?"].Current == 0;
+    var res = vars.w["Started?"].Old != 0 && vars.w["Started?"].Current == 0;
     return res;
   });
 
+  // ポーズ中
   vars.in_pause = (Func<bool>) (() => {
     return (vars.w["st_b8"].Current & 0x20000) != 0;
   });
 
+  // リプレイ再生中
   vars.in_replay = (Func<bool>) (() => {
-    if (vars.DEBUG) {
-      return false;
-    } else {
-      return (vars.w["st_b4"].Current & 0x08) != 0;
-    }
+    return (vars.w["st_b4"].Current & 0x08) != 0;
   });
 
+  // スペルプラクティス
   vars.in_sp = (Func<bool>) (() => {
     return (vars.w["st_b4"].Current & 0x4000) != 0x00;
   });
 
+  // 現在のスペルカード(スペルプラクティスにも対応)
   vars.get_current_spellcard = (Func<int>) (() => {
     return (vars.in_sp()
             ? vars.w["st_b8"].Current & 0xff
             : vars.w["Spell Card No"].Current);
   });
 
+  // スペルプラクティス中に死亡
   vars.sp_dead = (Func<bool>) (() => {
     return vars.w["Spell Card Bonus"].Old != 0 && vars.w["Spell Card Bonus"].Current == 0;
   });
 
+  // スペルプラクティス中断
   vars.sp_interepted = (Func<bool>) (() => {
     // retry or title
     return (vars.w["in Spell Card?"].Old != 0 && vars.w["in Spell Card?"].Current == 0 && vars.w["Spell Card Bonus"].Current == 0
@@ -204,6 +234,7 @@ init
     return vars.w["Spell Card Bonus"].Old == 0 && vars.w["Spell Card Bonus"].Current != 0;
   });
 
+  // スペルプラクティスクリア
   vars.sp_cleared = (Func<bool>) (() => {
     // last spell card of All Last Words Run.
     if (settings["Split on Menu in Spell Practice"]
@@ -214,19 +245,38 @@ init
     }
   });
 
-  vars.boss_appeared = (Func<bool>) (() => {
-    return vars.w["Boss Appeared?"].Old == 0 && vars.w["Boss Appeared?"].Current != 0;
-  });
+  // ボス登場
+  vars.boss_appears = (Func<string, int, bool>) ((key, prev_scno) => {
+    if (!(vars.w["Boss Exists?"].Old == 0 && vars.w["Boss Exists?"].Current != 0))
+      return false;
 
-  // true: spell card no. false: -1
-  vars.spellcard_ended = (Func<int>) (() => {
-    if (vars.w["in Spell Card?"].Old != 0 && vars.w["in Spell Card?"].Current == 0) {
-      return vars.get_current_spellcard();
-    } else {
-      return -1;
+    // return vars.get_current_spellcard() == prev_scno;
+
+    if (key.Contains("[Extra]")) {
+      if (key.Contains("Keine"))
+        return vars.get_current_spellcard() == 0;
+      else if (key.Contains("Mokou"))
+        return vars.get_current_spellcard() == 193;
     }
+
+    return false;
   });
 
+  // scno番(0-indexed)のスペルカード終了
+  vars.spellcard_ended = (Func<int, bool>) ((scno) => {
+    return (vars.w["in Spell Card?"].Old != 0
+            && vars.w["in Spell Card?"].Current == 0
+            && vars.get_current_spellcard() == scno);
+  });
+
+  // 通常攻撃終了(次がnext_scno番(0-indexed)のスペルカード)
+  vars.nonspell_ended = (Func<int, bool>) ((next_scno) => {
+    return (vars.w["in Spell Card?"].Old == 0
+            && vars.w["in Spell Card?"].Current != 0
+            && vars.get_current_spellcard() == next_scno);
+  });
+
+  // クリアフラグを立てる
   vars.set_clear_flag = (Func<int, bool>)((idx) => {
     var old_flag = vars.clear_flags[idx];
     vars.clear_flags[idx] = true;
@@ -244,6 +294,7 @@ init
     // return Array.BinarySearch(indexes, idx) != -1;
   });
 
+  // 死亡回数
   vars.get_death_count = (Func<int>)(() => {
     if (settings["Spell Practice Run"] || settings["All Last Words Run"]) {
       return vars.death_count;
@@ -252,10 +303,12 @@ init
     }
   });
 
+  // ボム回数
   vars.get_bomb_count = (Func<int>)(() => {
     return vars.w["Bomb Count"].Current;
   });
 
+  // スペルカード取得回数
   vars.get_spellcard_count = (Func<int>)(() => {
     if (!settings["Spell Practice Run"] && !settings["All Last Words Run"]) {
       return game.ReadValue<int>((IntPtr)vars.w["Spell Card Count Base"].Current + 0x1c);
@@ -274,6 +327,7 @@ init
     return count;
   });
 
+  // 統計更新
   vars.update_statistics = (Func<Process, bool>)((proc) => {
     if (!settings["Show Statistics"]) {
       return false;
@@ -353,31 +407,12 @@ update
 
 start
 {
-  var ok = vars.started();
+  return vars.started();
+}
 
-  if (ok) {
-    // copy splits
-    vars.splits = new Dictionary<string, int>(vars.original_splits);
-
-    // statistics
-    vars.death_count = 0;
-    vars.clear_flags = Enumerable.Repeat<bool>(false, 256).ToArray();
-
-    vars.succeed = false;
-    vars.total_attempt_count = 0;
-    vars.total_success_count = 0;
-    vars.history_success_count = 0;
-    vars.recent_average_timespan = TimeSpan.Zero;
-    vars.current_combo = 0;
-    vars.max_combo = 0;
-
-    vars.history.Clear();
-    // sentinel
-    vars.history.Enqueue(Tuple.Create(TimeSpan.Zero, false));
-
-    vars.update_statistics(game);
-  }
-  return ok;
+reset
+{
+  return vars.interrupted();
 }
 
 split
@@ -460,46 +495,45 @@ split
       }
     }
     return false;
-  } else {
-    foreach (var kv in vars.splits) {
-      var key = kv.Key;
-      var val = kv.Value;
-      if (!settings[key])
-        continue;
+  }
 
-      var ok = false;
-      if (key.EndsWith("Appears")) {
-        if (key.EndsWith("Keine Appears")) {
-          ok = vars.boss_appeared() && vars.get_current_spellcard() == 0;
-        } else if (key.EndsWith("Mokou Appears")) {
-          ok = vars.boss_appeared() && vars.get_current_spellcard() == 193;
-        }
-      } else if (key.EndsWith("Stage Clear")) {
-        var no = vars.spellcard_ended();
-        if (vars.get_spellcard_count() < 7) {
-          ok = no == 203;
-        } else {
-          ok = no == 204;
-        }
-      } else { // Spell Card ends
-        var no = vars.spellcard_ended();
-        ok = no != -1 && no == val;
+  // else
+  foreach (var kv in vars.splits) {
+    var key = kv.Key;
+    var val = kv.Value;
+    if (!settings[key])
+      continue;
+
+    var ok = false;
+    if (key.Contains("{Boss Appears}")) {
+      ok = vars.boss_appears(key, val);
+    } else if (key.Contains("{Spell Card}")) {
+      ok = vars.spellcard_ended(val);
+    } else if (key.Contains("{Nonspell}")) {
+      ok = vars.nonspell_ended(val);
+    } else if (key.EndsWith("Stage Clear")) {
+      if (vars.get_spellcard_count() < 7) {
+        ok = vars.spellcard_ended(203);
+      } else {
+        ok = vars.spellcard_ended(204);
       }
+    } else {
+      print("[ASL] Unknown Split Key: " + key);
+    }
 
-      if (ok) {
-        vars.split_counter = vars.split_delay;
-        vars.succeed = true;
-        vars.update = true;
+    if (ok) {
+      vars.split_counter = vars.split_delay;
+      vars.succeed = true;
+      vars.update = true;
 
-        print("[ASL] Split: " + key);
-        vars.splits.Remove(key);
-        return false;
-      }
+      print("[ASL] Split: " + key);
+      vars.splits.Remove(key);
+      return false;
     }
   }
 }
 
-reset
+shutdown
 {
-  return vars.interrupted();
+  timer.OnStart -= vars.timer_OnStart;
 }
