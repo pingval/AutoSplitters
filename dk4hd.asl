@@ -31,7 +31,7 @@ startup
   var split_defs = new List<Tuple<int, string, string, string, bool, bool>> {
     Tuple.Create(0, "Auto Stop", "Auto Stop", "Stop timing on SRC rules", true, true),
     Tuple.Create(0, "Griding Starts", "瀬戸内海開始 (Griding Starts)", "prev place == Nagasaki && current place == on the sea", false, true),
-    Tuple.Create(0, "Griding Ends", "瀬戸内海終了 (Griding Ends)", "hero’s level >= 100 && in city", false, true),
+    Tuple.Create(0, "Griding Ends", "瀬戸内海終了 (Griding Ends)", "hero’s level >= 50 && in city", false, true),
     Tuple.Create(-1, "<Parent> [Item]", "アイテム (Item)", "", true, true),
     Tuple.Create(-1, "<Parent> [Item][Hasha no Akashi]", "覇者の証 (Hasha no Akashi)", "", true, true),
     Tuple.Create(-1, "<Parent> [Item][Akashi Map]", "証の地図 (Akashi Map)", "", true, true),
@@ -536,7 +536,7 @@ startup
   vars.is_griding_ended = (Func<Process, int, bool>)((proc, _) => {
     // 主lv100以上 && 洋上ではない
     // print(vars.char_lv(proc, 235).ToString());
-    return vars.char_lv(proc, 235) >= 100 && !vars.is_on_sea(proc);
+    return vars.char_lv(proc, 235) >= 50 && !vars.is_on_sea(proc);
   });
 
   // 主人公選択画面
