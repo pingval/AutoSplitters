@@ -2,7 +2,8 @@
 
 state("th125", "ver 1.00a")
 {
-  int unknown : 0x0b30c0;
+// NG: 0x0d14c4 0x0d14c8 0x0d14d8
+//   int unknown : 0x0b677c;
   int st2_offset : 0xb68c8;
   int scenes_offset : 0x0b68d0;
 }
@@ -475,7 +476,7 @@ start
   // Hatate only: watch Hatate's 1-1
   var _1_1_idx = !settings["<Parent> [Normal Run][Aya's Side]"] && settings["<Parent> [Normal Run][Hatate's Side]"] ? 140 : 0;
   var not_1_1_cleared = game.ReadValue<int>((IntPtr)vars.scenes_offset + 0x48 * _1_1_idx + 0x04b4) == 0;
-  var ok = ((old.unknown != 0 && current.unknown == 0)
+  var ok = ((old.st2_offset == 0 && current.st2_offset != 0)
             && (!settings["<Parent> [Normal Run]"] || not_1_1_cleared));
   // var ok = ((old.unknown != 0 && current.unknown == 0)
   //           && (!settings["<Parent> [Normal Run]"] || vars.current_clear_count == 0));
